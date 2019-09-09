@@ -1,4 +1,4 @@
-package com.h.noahfrederkisenexperiment;
+package com.h.experiment;
 
 import android.os.Bundle;
 
