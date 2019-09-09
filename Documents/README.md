@@ -1,3 +1,5 @@
+<h1>README version of project details</h1>
+
 Finding an exercise routine is hard. Keeping the same exercise routine is even harder. Our project is going to be an android exercise app, called ExerCYze. Our app will have the ability to create exercise routines, store workout information, and create graphs based on the progress you have made so far with the workout. Friends are good motivation to keep working out. To help keep our users motivated, they will have the ability to add friends, and view their friends routines and workout progress.
 
  
