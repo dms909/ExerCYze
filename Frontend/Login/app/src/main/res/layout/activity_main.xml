@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="131dp"
+        android:layout_marginLeft="131dp"
+        android:layout_marginTop="54dp"
+        android:background="#F44336"
+        app:srcCompat="@drawable/wixsample" />
+
     <EditText
         android:id="@+id/Username"
         android:layout_width="wrap_content"
@@ -46,32 +60,16 @@
         android:textColor="#FDFDFC"
         android:textColorHighlight="#00E40505" />
 
-    <TextView
+    <Button
         android:id="@+id/Register"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="151dp"
-        android:layout_marginRight="151dp"
         android:layout_marginBottom="29dp"
-        android:text="Register Now"
-        android:textColor="#F44336" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="131dp"
-        android:layout_marginLeft="131dp"
-        android:layout_marginTop="54dp"
-        android:background="#F44336"
-        app:srcCompat="@drawable/wixsample" />
+        android:background="#FFFFFF"
+        android:shadowColor="#00000000"
+        android:text="Resiter Now"
+        android:textColor="#009688" />
 
 </RelativeLayout>
