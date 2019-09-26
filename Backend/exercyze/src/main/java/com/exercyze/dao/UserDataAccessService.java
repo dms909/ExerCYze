@@ -14,7 +14,7 @@ public class UserDataAccessService implements UserDao {
 
     @Override
     public int insertUser(UUID id, User user) {
-        DB.add(new User(id, user.getFirstName(), user.getLastName(), user.getUserName()));
+        DB.add(new User(id, user.getFirstName(), user.getLastName(), user.getUserName(),user.getWeight(),user.getHeight()));
         return 1;
     }
 
@@ -52,8 +52,10 @@ public class UserDataAccessService implements UserDao {
                                         id,
                                         user.getFirstName(),
                                         user.getLastName(),
-                                        user.getUserName())
-                        );
+                                        user.getUserName(),
+                                        user.getWeight(),
+                                        user.getHeight()
+                        ));
 
                         return 1;
                     }

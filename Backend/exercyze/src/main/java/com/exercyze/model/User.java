@@ -8,11 +8,17 @@ public class User {
     private final String lastName;
     private final String userName;
 
-    public User(UUID id, String firstName, String lastName, String userName) {
+    private double weight;
+    private double height;
+
+    public User(UUID id, String firstName, String lastName, String userName, double weight, double height)
+    {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
+        this.weight = weight;
+        this.height = height;
     }
 
     public UUID getId() {
@@ -30,4 +36,16 @@ public class User {
     public String getUserName() {
         return userName;
     }
+
+    public double getWeight()
+    {
+        return weight;
+    }
+
+    public double getHeight()
+    {
+        return height;
+    }
+
+
 }
