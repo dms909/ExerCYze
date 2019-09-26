@@ -1,12 +1,14 @@
 package com.exercyze.dao;
 
 import com.exercyze.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository("dao")
 public class UserDataAccessService implements UserDao {
     private static List<User> DB = new ArrayList<>();
 
