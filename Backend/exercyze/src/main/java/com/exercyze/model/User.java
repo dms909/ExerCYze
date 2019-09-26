@@ -8,8 +8,8 @@ public class User {
     private final String lastName;
     private final String userName;
 
-    private final double weight;
-    private final double height;
+    private double weight;
+    private double height;
 
     public User(UUID id, String firstName, String lastName, String userName, double weight, double height)
     {
