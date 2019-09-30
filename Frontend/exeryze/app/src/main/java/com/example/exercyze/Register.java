@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Register extends AppCompatActivity implements View.OnClickListener {
+public class Register extends AppCompatActivity {
 
     Button bRegister;
     EditText etName, etAge, etUsername, etPassword;
@@ -23,14 +23,15 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         etPassword = (EditText) findViewById(R.id.etPassword);
         bRegister = (Button) findViewById(R.id.bRegister);
 
-        bRegister.setOnClickListener(this);
+        bRegister.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()) {
+                    case R.id.bRegister:
+                        break;
+                }
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.bRegister:
-                break;
-        }
-    }
 }

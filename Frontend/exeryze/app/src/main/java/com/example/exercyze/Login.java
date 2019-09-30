@@ -13,7 +13,7 @@ public class Login extends AppCompatActivity {
 
     private Button bLogin;
     private EditText etUsername, etPassword;
-    private TextView tvRegisterLink;
+    private Button tvRegisterLink;
 
 
     @Override
@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.bLogin);
-        tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
+        tvRegisterLink = (Button) findViewById(R.id.tvRegisterLink);
         bLogin = (Button) findViewById(R.id.bLogin);
         bLogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -34,23 +34,30 @@ public class Login extends AppCompatActivity {
                         break;
 
                     case R.id.tvRegisterLink:
-                        startActivity(new Intent(this, Register.class));
+                        openRegister();
                         break;
                 }
             }
         });
+        tvRegisterLink.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.bLogin:
+                        break;
+
+                    case R.id.tvRegisterLink:
+                        openRegister();
+                        break;
+                }
+            }
+        });
+
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.bLogin:
-//                break;
-//
-//            case R.id.tvRegisterLink:
-//                startActivity(new Intent(this, Register.class));
-//                break;
-//        }
-//
-//    }
+    public void openRegister()
+    {
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
+    }
 }
