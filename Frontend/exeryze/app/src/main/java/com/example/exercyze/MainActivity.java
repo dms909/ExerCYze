@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  {
 
-    Button bLogout;
-    EditText etName, etAge, etUsername, etPassword;
+    private Button bLogout;
+    private EditText etName, etAge, etUsername, etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +24,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bLogout = (Button) findViewById(R.id.bLogout);
 
-        bLogout.setOnClickListener(this);
+        bLogout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.bLogout:
+                        openLogin();
+                        break;
+                }
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bLogout:
-
-                startActivity(new Intent(this, Login.class));
-                break;
-        }
+    public void openLogin()
+    {
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
     }
+
 }

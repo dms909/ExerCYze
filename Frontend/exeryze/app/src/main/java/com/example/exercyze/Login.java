@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity {
 
-    Button bLogin;
-    EditText etUsername, etPassword;
-    TextView tvRegisterLink;
+    private Button bLogin;
+    private EditText etUsername, etPassword;
+    private TextView tvRegisterLink;
 
 
     @Override
@@ -25,19 +25,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.bLogin);
         tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
-        bLogin.setOnClickListener(this);
+        bLogin = (Button) findViewById(R.id.bLogin);
+        bLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.bLogin:
+                        break;
+
+                    case R.id.tvRegisterLink:
+                        startActivity(new Intent(this, Register.class));
+                        break;
+                }
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bLogin:
-                break;
-
-            case R.id.tvRegisterLink:
-                startActivity(new Intent(this, Register.class));
-                break;
-        }
-
-    }
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.bLogin:
+//                break;
+//
+//            case R.id.tvRegisterLink:
+//                startActivity(new Intent(this, Register.class));
+//                break;
+//        }
+//
+//    }
 }
