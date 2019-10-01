@@ -7,11 +7,18 @@ public class User {
     private final String firstName;
     private final String lastName;
     private final String userName;
+    private final String password;
 
     private double weight;
     private double height;
 
-    public User(UUID id, String firstName, String lastName, String userName, double weight, double height)
+    public User(UUID id,
+                String firstName,
+                String lastName,
+                String userName,
+                double weight,
+                double height,
+                String password)
     {
         this.id = id;
         this.firstName = firstName;
@@ -19,6 +26,7 @@ public class User {
         this.userName = userName;
         this.weight = weight;
         this.height = height;
+        this.password = password;
     }
 
     public UUID getId() {
@@ -47,5 +55,7 @@ public class User {
         return height;
     }
 
-
+    public String getPassword() {
+        return password;
+    }
 }
