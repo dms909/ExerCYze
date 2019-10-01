@@ -2,13 +2,13 @@ package com.exercyze.model;
 
 import java.util.UUID;
 
+
 public class User {
     private final UUID id;
     private final String firstName;
     private final String lastName;
     private final String userName;
     private final String password;
-
     private double weight;
     private double height;
 
@@ -16,17 +16,17 @@ public class User {
                 String firstName,
                 String lastName,
                 String userName,
+                String password,
                 double weight,
-                double height,
-                String password)
+                double height)
     {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
+        this.password = password;
         this.weight = weight;
         this.height = height;
-        this.password = password;
     }
 
     public UUID getId() {
