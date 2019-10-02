@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.exercyze</groupId>
 	<artifactId>exercyze</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>exercyze</name>
 	<description>Exercise app for 309</description>
 
