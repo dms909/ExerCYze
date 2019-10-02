@@ -55,12 +55,10 @@ public class MainActivity<stringRequest> extends AppCompatActivity  {
             }
         });
 
-        // Instantiate the RequestQueue.
         String tag_json_obj ="json_obj_req";
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://coms-309-sb-7.misc.iastate.edu:8080/api/user";
 
-        // Request a string response from the provided URL.
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
                     @Override
                 public void onResponse(JSONArray response){
