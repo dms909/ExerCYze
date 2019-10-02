@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,7 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.exercyze.app.AppController;
 
-import org.json.JSONObject;
+
 
 public class MainActivity<stringRequest> extends AppCompatActivity  {
 
@@ -52,11 +54,12 @@ public class MainActivity<stringRequest> extends AppCompatActivity  {
 
 
         // Instantiate the RequestQueue.
+        String tag_json_obj ="json_obj_req";
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="http://coms-309-sb-7.misc.iastate.edu:8080/api/user";
 
         // Request a string response from the provided URL.
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
                     @Override
                 public void onResponse(JSONObject response){
                         // Display the first 500 characters of the response string.
@@ -69,6 +72,8 @@ public class MainActivity<stringRequest> extends AppCompatActivity  {
             }
         });
 
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        queue.add(jsonObjReq);
     }
 
     public void openLogin()
