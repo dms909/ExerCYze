@@ -1,18 +1,36 @@
 package com.exercyze.model;
 
+import javax.persistence.*;
 import java.util.UUID;
 
-
+@Entity
+@Table(name="user")
 public class User {
-    private final UUID id;
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private final Integer id;
+
+    @Column(name = "firstName")
     private final String firstName;
+
+    @Column(name = "lastName")
     private final String lastName;
+
+    @Column(name = "userName")
     private final String userName;
+
+    @Column(name = "password")
     private final String password;
+
+    @Column(name = "weight")
     private double weight;
+
+    @Column(name = "height")
     private double height;
 
-    public User(UUID id,
+    public User(Integer id,
                 String firstName,
                 String lastName,
                 String userName,
@@ -29,7 +47,18 @@ public class User {
         this.height = height;
     }
 
-    public UUID getId() {
+   public User(){
+        id = null;
+        firstName = null;
+        lastName = null;
+        userName = null;
+        password = null;
+        weight = 0;
+        height = 0;
+   }
+
+
+    public Integer getId() {
         return id;
     }
 
