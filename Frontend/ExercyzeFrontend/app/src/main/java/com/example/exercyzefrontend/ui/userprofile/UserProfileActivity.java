@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exercyzefrontend.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ import java.net.URL;
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button workoutBtn, progressBtn, socialBtn, jsonBtn;
+    FloatingActionButton editFAB;
     TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
     private String finalresult;
 
@@ -35,7 +37,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        userNameTV = (TextView) findViewById(R.id.userName);
+        userNameTV = (TextView) findViewById(R.id.user_Name);
         userRealNameTV = (TextView) findViewById(R.id.userRealName);
         userHeightTV = (TextView) findViewById(R.id.userHeight);
         userWeightTV = (TextView) findViewById(R.id.userWeight);
@@ -43,12 +45,15 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         workoutBtn = (Button) findViewById(R.id.workoutBtn);
         progressBtn = (Button) findViewById(R.id.progressBtn);
         socialBtn = (Button) findViewById(R.id.socialBtn);
-        jsonBtn = (Button) findViewById(R.id.jsonArrBtn);
+
+        editFAB = (FloatingActionButton) findViewById(R.id.editFAB);
+
 
         workoutBtn.setOnClickListener(this);
         progressBtn.setOnClickListener(this);
         socialBtn.setOnClickListener(this);
-        jsonBtn.setOnClickListener(this);
+
+        editFAB.setOnClickListener(this);
 
         //class for getting and parsing Json data
         new GetJsonData().execute();
@@ -70,12 +75,17 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 //TO DO
                 break;
 
-            case R.id.jsonArrBtn:
-                new GetJsonData().execute();
+            case R.id.editFAB:
+                //TO DO
+                //editMode();
                 break;
         }
     }
 
+    /**
+     * A private class within the user profile activity
+     * that handles getting json data from the backend
+     */
     private class GetJsonData extends AsyncTask<Void, Void, Void> {
 
         @Override

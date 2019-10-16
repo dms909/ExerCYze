@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/userName"
+            android:id="@+id/user_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -50,7 +50,14 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userName" />
+            app:layout_constraintTop_toBottomOf="@+id/user_Name" />
+
+        <EditText
+            android:id="@+id/userRealNameET"
+            android:layout_width="99dp"
+            android:layout_height="49dp"
+            app:layout_constraintBottom_toBottomOf="@+id/userRealName"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/userHeight"
@@ -63,6 +70,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userRealName" />
 
+        <EditText
+            android:id="@+id/userHeightET"
+            android:layout_width="99dp"
+            android:layout_height="49dp"
+            app:layout_constraintBottom_toBottomOf="@+id/userHeight"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/userWeight"
             android:layout_width="wrap_content"
@@ -73,6 +87,13 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userHeight" />
+
+        <EditText
+            android:id="@+id/userWeightET"
+            android:layout_width="99dp"
+            android:layout_height="49dp"
+            app:layout_constraintBottom_toBottomOf="@+id/userWeight"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/editFAB"
@@ -119,17 +140,6 @@
         android:text="Social"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-    <Button
-        android:id="@+id/jsonArrBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="152dp"
-        android:layout_marginRight="152dp"
-        android:text="Parse JSON"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
