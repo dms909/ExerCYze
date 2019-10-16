@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,11 +26,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener{
+public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button workoutBtn, progressBtn, socialBtn, jsonBtn;
     FloatingActionButton editFAB;
     TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
+    EditText userRealNameET, userHeightET, userWeightET;
+    boolean editMode;
     private String finalresult;
 
     @Override
@@ -37,10 +40,21 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        editMode = false;
+
         userNameTV = (TextView) findViewById(R.id.user_Name);
         userRealNameTV = (TextView) findViewById(R.id.userRealName);
         userHeightTV = (TextView) findViewById(R.id.userHeight);
         userWeightTV = (TextView) findViewById(R.id.userWeight);
+
+        userRealNameET = (EditText) findViewById(R.id.userRealNameET);
+        userHeightET = (EditText) findViewById(R.id.userHeightET);
+        userWeightET = (EditText) findViewById(R.id.userWeightET);
+        //hiding edit text while not in user edit mode
+        userRealNameET.setVisibility(View.GONE);
+        userHeightET.setVisibility(View.GONE);
+        userWeightET.setVisibility(View.GONE);
+
 
         workoutBtn = (Button) findViewById(R.id.workoutBtn);
         progressBtn = (Button) findViewById(R.id.progressBtn);
@@ -80,6 +94,18 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 //editMode();
                 break;
         }
+    }
+
+    public void editMode() {
+        editMode = true;
+
+        userRealNameTV.setVisibility(View.GONE);
+        userHeightTV.setVisibility(View.GONE);
+        userWeightTV.setVisibility(View.GONE);
+        userRealNameET.setVisibility(View.VISIBLE);
+        userHeightET.setVisibility(View.VISIBLE);
+        userWeightTV.setVisibility(View.VISIBLE);
+
     }
 
     /**

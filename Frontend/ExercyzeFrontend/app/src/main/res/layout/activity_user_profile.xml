@@ -56,8 +56,11 @@
             android:id="@+id/userRealNameET"
             android:layout_width="99dp"
             android:layout_height="49dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/userRealName"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="Jim Smith"/>
 
         <TextView
             android:id="@+id/userHeight"
@@ -75,7 +78,8 @@
             android:layout_width="99dp"
             android:layout_height="49dp"
             app:layout_constraintBottom_toBottomOf="@+id/userHeight"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="Height as (in) "/>
 
         <TextView
             android:id="@+id/userWeight"
@@ -93,7 +97,8 @@
             android:layout_width="99dp"
             android:layout_height="49dp"
             app:layout_constraintBottom_toBottomOf="@+id/userWeight"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:hint="Enter Weight in (lbs)"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/editFAB"
