@@ -4,12 +4,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.exercyzefrontend.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,11 +31,13 @@ import java.net.URL;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
+    ConstraintLayout userProfileCL;
     Button workoutBtn, progressBtn, socialBtn, jsonBtn;
     FloatingActionButton editFAB;
     TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
     EditText userRealNameET, userHeightET, userWeightET;
     boolean editMode;
+    private Button editSaveBtn;
     private String finalresult;
 
     @Override
@@ -41,6 +46,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_user_profile);
 
         editMode = false;
+
+        userProfileCL = findViewById(R.id.userProfileCL);
 
         userNameTV = (TextView) findViewById(R.id.user_Name);
         userRealNameTV = (TextView) findViewById(R.id.userRealName);
@@ -91,7 +98,14 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.editFAB:
                 //TO DO
-                //editMode();
+                editMode();
+                editSaveBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO
+                    }
+                });
+
                 break;
         }
     }
@@ -104,7 +118,12 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         userWeightTV.setVisibility(View.GONE);
         userRealNameET.setVisibility(View.VISIBLE);
         userHeightET.setVisibility(View.VISIBLE);
-        userWeightTV.setVisibility(View.VISIBLE);
+        userWeightET.setVisibility(View.VISIBLE);
+
+        editSaveBtn = new Button(this);
+        editSaveBtn.setText("Save");
+        editSaveBtn.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        userProfileCL.addView(editSaveBtn);
 
     }
 
