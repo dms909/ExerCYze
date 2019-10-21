@@ -12,6 +12,7 @@ maven-build:
     script:
       - cd Backend/exercyze
       - mvn package -B
+      - ls target
 
 maven-test:
     stage: maventest
