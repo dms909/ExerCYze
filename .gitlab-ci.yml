@@ -22,7 +22,7 @@ maven-test:
       - mvn test
     artifacts:
       paths:
-        - Backend/exercyze/target/exercyze-2.0.1-SNAPSHOT.jar
+        - Backend/exercyze/target/*.jar
 
 autoDeploy:
   stage: autodeploy
