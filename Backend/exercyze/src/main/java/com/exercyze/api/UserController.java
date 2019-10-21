@@ -32,6 +32,11 @@ public class UserController {
         return db.findById(id);
     }
 
+    @GetMapping(path = "userName")
+    public User getUserByUserName(@RequestParam("userName") String userName){
+        return db.findByUserName(userName);
+    }
+
     @DeleteMapping(path="{id}")
     public void deleteUserById(@PathVariable("id") Integer id){
         db.deleteById(id);

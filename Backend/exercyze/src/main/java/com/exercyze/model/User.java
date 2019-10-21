@@ -1,5 +1,7 @@
 package com.exercyze.model;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -12,14 +14,13 @@ public class User {
     @Column(name = "id")
     private final Integer id;
 
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private final String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private final String lastName;
 
-    //add unique
-    @Column(name = "userName")
+    @Column(name = "user_name")
     private final String userName;
 
     @Column(name = "password")
@@ -65,7 +66,7 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName + "hello there!";
+        return firstName;
     }
 
     public String getLastName() {
