@@ -30,7 +30,6 @@ autoDeploy:
   script: 
     - cd Backend/exercyze
     - mvn test
-    - mvn package -B
     - sudo mv target/*.jar /target/web-demo.jar
     - sudo systemctl stop systemd-web-demo
     - sudo systemctl start systemd-web-demo
