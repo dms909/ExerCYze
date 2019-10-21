@@ -18,6 +18,7 @@ public class User {
     @Column(name = "lastName")
     private final String lastName;
 
+    //add unique
     @Column(name = "userName")
     private final String userName;
 
@@ -63,7 +64,7 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstName + "hhhhh";
     }
 
     public String getLastName() {
