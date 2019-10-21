@@ -18,6 +18,7 @@ maven-test:
       - shell
     script:
       - cd Backend/exercyze
+      - ls target
       - mvn test
     artifacts:
       paths:
