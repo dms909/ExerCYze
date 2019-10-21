@@ -22,7 +22,7 @@ maven-test:
       - mvn test
     artifacts:
       paths:
-        - Backend/exercyze/target/exercyze-2.0.1.SNAPSHOT.jar
+        - Backend/exercyze/target/exercyze-2.0.1-SNAPSHOT.jar
 
 autoDeploy:
   stage: autodeploy
@@ -31,6 +31,6 @@ autoDeploy:
   script: 
     - cd Backend/exercyze
     - mvn test
-    - sudo mv target/exercyze-2.0.1.SNAPSHOT.jar /target/web-demo.jar
+    - sudo mv target/exercyze-2.0.1-SNAPSHOT.jar /target/web-demo.jar
     - sudo systemctl stop systemd-web-demo
     - sudo systemctl start systemd-web-demo
