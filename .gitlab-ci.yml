@@ -10,7 +10,6 @@ maven-build:
     script:
       - cd Backend/exercyze
       - mvn package -B
-      - ls target
 
 maven-test:
     stage: maventest
@@ -18,8 +17,8 @@ maven-test:
       - shell
     script:
       - cd Backend/exercyze
-      - ls target
       - mvn test
+      - mvn package -B
     artifacts:
       paths:
         - Backend/exercyze/target/*.jar
@@ -31,7 +30,7 @@ autoDeploy:
   script: 
     - cd Backend/exercyze
     - mvn test
-    - ls target
+    - mvn package -B
     - sudo mv target/*.jar /target/web-demo.jar
     - sudo systemctl stop systemd-web-demo
     - sudo systemctl start systemd-web-demo
