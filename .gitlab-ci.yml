@@ -20,9 +20,10 @@ maven-test:
     script:
       - cd Backend/exercyze
       - mvn test
+      - ls
     artifacts:
       paths:
-        - target/*.jar
+        - Backend/exercyze/target/*.jar
 
 autoDeploy:
   stage: autodeploy
