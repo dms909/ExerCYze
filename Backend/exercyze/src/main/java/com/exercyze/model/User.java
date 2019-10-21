@@ -31,8 +31,6 @@ public class User {
     @Column(name = "height")
     private double height;
 
-    private final String test;
-
     public User(Integer id,
                 String firstName,
                 String lastName,
@@ -49,7 +47,6 @@ public class User {
         this.password = password;
         this.weight = weight;
         this.height = height;
-        this.test = test;
     }
 
    public User(){
@@ -60,7 +57,6 @@ public class User {
         password = null;
         weight = 0;
         height = 0;
-        test = "hi there";
    }
 
 
@@ -93,6 +89,4 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-    public String getTest() {return test;}
 }
