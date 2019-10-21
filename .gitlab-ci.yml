@@ -18,7 +18,7 @@ maven-test:
     tags:
       - shell
     script:
-      - cd Spring
+      - cd Backend/exercyze
       - mvn test
     artifacts:
       paths:
@@ -29,7 +29,7 @@ autoDeploy:
   tags: 
     - shell
   script: 
-    - cd Spring
+    - cd Backend/exercyze
     - mvn test
     - sudo mv target/*.jar /target/web-demo.jar
     - sudo systemctl stop systemd-web-demo
