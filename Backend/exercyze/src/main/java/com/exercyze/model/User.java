@@ -74,7 +74,7 @@ public class User {
     }
 
     public String getUserName() {
-        return userName + "stop pls";
+        return userName;
     }
 
     public double getWeight()
