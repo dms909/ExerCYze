@@ -1,22 +1,5 @@
 package com.example.exercyzefrontend.ui.signup;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.exercyzefrontend.R;
-import com.example.exercyzefrontend.app.AppController;
-import com.example.exercyzefrontend.ui.login.LoginActivity;
-import com.example.exercyzefrontend.utils.Const;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,10 +7,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONArray;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.exercyzefrontend.R;
+import com.example.exercyzefrontend.app.AppController;
+import com.example.exercyzefrontend.ui.login.LoginActivity;
+import com.example.exercyzefrontend.utils.Const;
+
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
