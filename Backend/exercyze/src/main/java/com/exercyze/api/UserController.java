@@ -19,7 +19,10 @@ public class UserController {
 
     @PostMapping
     public void addUser(@Valid @NonNull @RequestBody User user){
-        db.save(user);
+        if(getUserByUserName(user.getUserName()) == null){
+            db.save(user);
+            return;
+        }
     }
 
     @GetMapping
@@ -30,6 +33,11 @@ public class UserController {
     @GetMapping(path = "{id}")
     public Optional<User> getUserById(@PathVariable Integer id){
         return db.findById(id);
+    }
+
+    @GetMapping(path = "userName")
+    public User getUserByUserName(@RequestParam("userName") String userName){
+        return db.findByUserName(userName);
     }
 
     @DeleteMapping(path="{id}")
