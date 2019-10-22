@@ -1,5 +1,6 @@
 package com.example.exercyzefrontend.ui.userprofile;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exercyzefrontend.R;
+import com.example.exercyzefrontend.ui.progress.UserProgressActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,7 +65,9 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.progressBtn:
-                //TO DO
+                Intent userProgressIntent = new Intent(getApplicationContext(), UserProgressActivity.class);
+
+                startActivity(userProgressIntent);
                 break;
 
             case R.id.socialBtn:
