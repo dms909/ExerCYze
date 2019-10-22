@@ -18,6 +18,7 @@ public class User {
     @Column(name = "lastName")
     private final String lastName;
 
+    //add unique
     @Column(name = "userName")
     private final String userName;
 
@@ -36,7 +37,8 @@ public class User {
                 String userName,
                 String password,
                 double weight,
-                double height)
+                double height,
+                String test)
     {
         this.id = id;
         this.firstName = firstName;
@@ -63,7 +65,7 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstName + "hello there!";
     }
 
     public String getLastName() {
