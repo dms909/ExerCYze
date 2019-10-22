@@ -19,7 +19,10 @@ public class UserController {
 
     @PostMapping
     public void addUser(@Valid @NonNull @RequestBody User user){
-        db.save(user);
+        if(getUserByUserName(user.getUserName()) == null){
+            db.save(user);
+            return;
+        }
     }
 
     @GetMapping
