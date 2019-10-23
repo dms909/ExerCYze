@@ -38,8 +38,7 @@ public class User {
                 String userName,
                 String password,
                 double weight,
-                double height,
-                String test)
+                double height)
     {
         this.id = id;
         this.firstName = firstName;

@@ -31,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping(path = "{id}")
-    public Optional<User> getUserById(@PathVariable Integer id){
-        return db.findById(id);
+    public User getUserById(@PathVariable Integer id){
+        return db.findUserById(id);
     }
 
     @GetMapping(path = "userName")
