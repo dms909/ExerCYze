@@ -41,26 +41,25 @@ android-build:
     image: javiersantos/android-ci:latest
     stage: androidbuild
     before_script:
-        - ls
         - export GRADLE_USER_HOME='pwd'/.gradle
-        - chmod +x ./androidTest/gradlew
+        - chmod +x ./Frontend/ExercyzeFrontend/gradlew
     tags:
         - android_tag
     script:
-        - cd androidTest
+        - cd Frontend/ExercyzeFrontend/
         - ./gradlew assemble
     artifacts:
         paths:
-            - androidTest/app/build/outputs/
+            - Frontend/ExercyzeFrontend/app/build/outputs/
 
 unitTests:
     image: javiersantos/android-ci:latest
     stage: androidtest
     before_script:
         - export GRADLE_USER_HOME='pwd'/.gradle
-        - chmod +x ./androidTest/gradlew
+        - chmod +x ./Frontend/ExercyzeFrontend/gradlew
     tags:
         - android_tag
     script:
-        - cd androidTest
+        - cd Frontend/ExercyzeFrontend/
         - ./gradlew assemble
