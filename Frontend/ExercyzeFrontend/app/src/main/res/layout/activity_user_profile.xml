@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ContentDescription"
+    android:id="@+id/userProfileCL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.userprofile.UserProfileActivity">
@@ -32,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/userName"
+            android:id="@+id/user_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -51,7 +52,16 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userName" />
+            app:layout_constraintTop_toBottomOf="@+id/user_Name" />
+
+        <EditText
+            android:id="@+id/userRealNameET"
+            android:layout_width="150dp"
+            android:layout_height="49dp"
+            android:hint="Jim Smith"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileBlank" />
 
         <TextView
             android:id="@+id/userHeight"
@@ -64,6 +74,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userRealName" />
 
+        <EditText
+            android:id="@+id/userHeightET"
+            android:layout_width="150dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="20dp"
+            android:hint="Height (in) "
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userRealNameET" />
+
         <TextView
             android:id="@+id/userWeight"
             android:layout_width="wrap_content"
@@ -74,6 +94,16 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userHeight" />
+
+        <EditText
+            android:id="@+id/userWeightET"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:hint="Enter Weight (lbs)"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userHeightET" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/editFAB"
@@ -120,17 +150,6 @@
         android:text="Social"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-    <Button
-        android:id="@+id/jsonArrBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="152dp"
-        android:layout_marginRight="152dp"
-        android:text="Parse JSON"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
