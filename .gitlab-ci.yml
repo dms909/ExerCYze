@@ -41,6 +41,7 @@ android-build:
     image: javiersantos/android-ci:latest
     stage: androidbuild
     before_script:
+        - ls
         - export GRADLE_USER_HOME='pwd'/.gradle
         - chmod +x ./androidTest/gradlew
     tags:
@@ -56,7 +57,6 @@ unitTests:
     image: javiersantos/android-ci:latest
     stage: androidtest
     before_script:
-        - ls
         - export GRADLE_USER_HOME='pwd'/.gradle
         - chmod +x ./androidTest/gradlew
     tags:
