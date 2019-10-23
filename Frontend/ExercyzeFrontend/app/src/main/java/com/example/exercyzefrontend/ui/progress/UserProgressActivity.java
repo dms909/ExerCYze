@@ -44,7 +44,6 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
     Button addEntryBtn;
 
     int barEntryIndex = 0;
-    double newWeightEntry = 0.0;
     private String finalresult;
 
 
@@ -64,32 +63,16 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
             }
         });
 
-        //createUserProgressBC();
-        //currentDate will be user for when the user enters their weight it will be associated to
-        //the day the user adds the weight
         String currentDate = new SimpleDateFormat(("dd-MM-yyyy"), Locale.getDefault()).format(new Date());
 
         //user entries is a list that contains change of weight
         //so this is the y-axis data
         userEntries = new ArrayList<>();
         userEntries.add(new BarEntry((150f), 0));
-        //userEntries.add(new BarEntry((148f), 1));
-        //userEntries.add(new BarEntry((151f), 2));
-        //userEntries.add(new BarEntry((152f), 3));
-        //userEntries.add(new BarEntry((151f), 4));
-        //userEntries.add(new BarEntry((151f), 5));
-        //userEntries.add(new BarEntry((151f), 6));
-        //BarDataSet userProgressDataSet = new BarDataSet(userEntries, "Weight (lbs)");
         userWeightDataSet = new BarDataSet(userEntries, "Weight (lbs)");
 
         datesBC = new ArrayList<>();
         datesBC.add(currentDate);
-        //datesByWeek.add("10/22");
-        //datesByWeek.add("10/23");
-        //datesByWeek.add("10/24");
-        //datesByWeek.add("10/25");
-        //datesByWeek.add("10/26");
-        //datesByWeek.add("10/27");
 
         BarData userProgressData = new BarData(datesBC, userWeightDataSet);
         userWeightBC.setData(userProgressData);
@@ -97,24 +80,8 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         userWeightBC.setDragEnabled(true);
         userWeightBC.setScaleEnabled(true);
         barEntryIndex++;
-        //addEntryToBC(140.0, barEntryIndex);
 
-        ////////////////////////////////////
-        /*
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.DATE,1);
-        Date currentDatePlusOne = c.getTime();
-        String currDatePlusOne = new SimpleDateFormat(("dd-MM-yyyy")).format(currentDatePlusOne);
-
-        //userEntries.add(new BarEntry(150f, 1));
-        userWeightDataSet.addEntry(new BarEntry(140f, 1));
-        datesBC.add(currDatePlusOne);
-        userWeightBC.setData(new BarData(datesBC,userWeightDataSet));
-        */
-        //////////////////////////////////////
         new GetJsonData().execute();
-
     }
 
     public void openEntryDialog() {
@@ -124,46 +91,20 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
 
     @Override
     public void applyValue(double weightEntryVal) {
-
         addEntryToBC(weightEntryVal, barEntryIndex);
         barEntryIndex++;
-        /*
-        //addEntryToBC(weightEntryVal, barEntryIndex);
-        BarEntry newEntry = new BarEntry((float) weightEntryVal, barEntryIndex);
-        userWeightDataSet.addEntry(newEntry);
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.DATE, barEntryIndex);
-        Date currentDatePlusOne = c.getTime();
-        datesBC.add(new SimpleDateFormat(("dd-MM-yyyy")).format(currentDatePlusOne));
-        userWeightBC.setData(new BarData(datesBC, userWeightDataSet));
-        barEntryIndex++;
-        //weightEntryVal = newWeightEntry; */
-
     }
 
     public void addEntryToBC(double weightEntry, int chartIndex) {
-        //serEntries.add(new BarEntry((float) weightEntry, chartIndex));
-        //chartIndex++;
-        //userEntries.add(new BarEntry((float) weightEntry, chartIndex));
         BarEntry newEntry = new BarEntry((float) weightEntry, chartIndex);
         userWeightDataSet.addEntry(newEntry);
-        Calendar c = Calendar.getInstance();
+        c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.DATE, chartIndex);
         Date currentDatePlusOne = c.getTime();
         datesBC.add(new SimpleDateFormat(("dd-MM-yyyy")).format(currentDatePlusOne));
         userWeightBC.setData(new BarData(datesBC, userWeightDataSet));
-
     }
-
-    public void createUserProgressBC() {
-        // BarDataSet userWeightDataSet = new BarDataSet(userEntries,"Weight (lbs)");
-        // BarData userWeightData = new BarData(datesBC,userWeightDataSet);
-        // userWeightBC.setData(userWeightData);
-        //barChart.setDescription("My First Bar Graph!");
-    }
-
 
     private class GetJsonData extends AsyncTask<Void, Void, Void> {
 
@@ -171,7 +112,6 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         protected void onPreExecute() {
             super.onPreExecute();
             // before making http calls
-
         }
 
         @Override
