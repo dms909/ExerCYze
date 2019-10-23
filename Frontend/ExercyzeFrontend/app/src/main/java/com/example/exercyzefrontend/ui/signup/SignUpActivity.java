@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.exercyzefrontend.R;
 import com.example.exercyzefrontend.app.AppController;
 import com.example.exercyzefrontend.ui.login.LoginActivity;
+import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
 import com.example.exercyzefrontend.utils.Const;
 
 import android.content.Intent;
@@ -62,9 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
                 double weight = Double.parseDouble(weightET.getText().toString());
 
                 postUserModel(firstName, lasttName, userName, password, height, weight);
-                Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
 
-                startActivity(loginActivity);
+                startActivity(profileActivity);
             }
         });
     }
