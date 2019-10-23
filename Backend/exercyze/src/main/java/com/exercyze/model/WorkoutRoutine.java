@@ -1,6 +1,7 @@
 package com.exercyze.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,8 @@ public class WorkoutRoutine {
 
     @Column(name = "workout_routine_creator")
     private String workoutRoutineCreator;
+
+    //List<Workout> workoutList = new ArrayList<Workout>();
 
     public WorkoutRoutine(Integer id, String workoutRoutineName, String workoutRoutineCreator) {
         this.id = id;

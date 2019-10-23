@@ -23,6 +23,12 @@ public class WorkoutRoutineController {
         db.save(workoutRoutine);
     }
 
+    @GetMapping(path = "{id}")
+    public WorkoutRoutine getWorkoutRoutineById(@PathVariable Integer id){
+        WorkoutRoutine toReturn =  db.findWorkoutRoutineById(id);
+        return toReturn;
+    }
+
     @GetMapping
     public List<WorkoutRoutine> getAllWorkoutRoutine(){
         return db.findAll();
