@@ -232,15 +232,9 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
-                userTitleTV.setText(obj.getString("userName") + "'s Progress");
-                //double latitude= obj.getDouble("latitude");
-                //double longitude= obj.getDouble("longitude");
-                //String placeName= obj.getString("placeName");
-                //userNameTV.setText(obj.getString("userName"));
-                //realName = obj.getString("firstName") + " " + obj.getString("lastName");
-                //userRealNameTV.setText(realName);
-                //userHeightTV.setText(obj.getString("height") + " in");
-                //userWeightTV.setText(obj.getString("weight") + " lbs");
+                String uName = obj.getString("userName") + "'s Progress";
+                userTitleTV.setText(uName);
+
             }
         }
 
