@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 
-public class ExercyzeApplicationTests {
+public class UserTests {
 
 	@InjectMocks
 	UserController userController;

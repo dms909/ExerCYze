@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="user")
+@Table(name="workout_routine")
 public class WorkoutRoutine {
 
     @Id
@@ -12,16 +12,23 @@ public class WorkoutRoutine {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "workout_routine_name")
     private String workoutRoutineName;
 
+    @Column(name = "workout_routine_creator")
     private String workoutRoutineCreator;
 
-    private List<Workout> workoutList;
-
-    public WorkoutRoutine(String workoutRoutineName, String workoutRoutineCreator) {
+    public WorkoutRoutine(Integer id, String workoutRoutineName, String workoutRoutineCreator) {
+        this.id = id;
         this.workoutRoutineName = workoutRoutineName;
         this.workoutRoutineCreator = workoutRoutineCreator;
-        this.workoutList = null;
+        //this.workoutList = null;
+    }
+
+    public WorkoutRoutine(){
+        this.id = null;
+        this.workoutRoutineName = null;
+        this.workoutRoutineCreator = null;
     }
 
     public Integer getId() {
@@ -36,7 +43,7 @@ public class WorkoutRoutine {
         return workoutRoutineCreator;
     }
 
-    public List<Workout> getWorkoutList() {
+    /*public List<Workout> getWorkoutList() {
         return workoutList;
-    }
+    }*/
 }
