@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/titleTV"
+            android:id="@+id/userTitleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="85dp"
@@ -37,10 +37,10 @@
             android:id="@+id/userProgressBC"
             android:layout_width="370dp"
             android:layout_height="350dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="150dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleTV" />
+            app:layout_constraintTop_toBottomOf="@+id/userTitleTV" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

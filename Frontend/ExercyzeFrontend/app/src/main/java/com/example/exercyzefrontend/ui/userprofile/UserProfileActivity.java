@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,11 +101,13 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.editFAB:
                 //TO DO
-                editMode();
+                editMode(true);
                 editSaveBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //TODO
+                        //Save user data to backend
+                        editMode(false);
                     }
                 });
 
@@ -114,27 +115,32 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    public void editMode() {
-        editMode = true;
+    public void editMode(boolean mode) {
+        //editMode = true;
+        if (mode) {
+            userRealNameTV.setVisibility(View.GONE);
+            userHeightTV.setVisibility(View.GONE);
+            userWeightTV.setVisibility(View.GONE);
+            userRealNameET.setVisibility(View.VISIBLE);
+            userHeightET.setVisibility(View.VISIBLE);
+            userWeightET.setVisibility(View.VISIBLE);
 
-        userRealNameTV.setVisibility(View.GONE);
-        userHeightTV.setVisibility(View.GONE);
-        userWeightTV.setVisibility(View.GONE);
-        userRealNameET.setVisibility(View.VISIBLE);
-        userHeightET.setVisibility(View.VISIBLE);
-        userWeightET.setVisibility(View.VISIBLE);
-
-        editSaveBtn = new Button(this);
-        editSaveBtn.setText("Save");
-        editSaveBtn.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        userProfileCL.addView(editSaveBtn);
-
+            editSaveBtn = new Button(this);
+            editSaveBtn.setText("Save");
+            editSaveBtn.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            userProfileCL.addView(editSaveBtn);
+        } else {
+            userRealNameTV.setVisibility(View.VISIBLE);
+            userHeightTV.setVisibility(View.VISIBLE);
+            userWeightTV.setVisibility(View.VISIBLE);
+            userRealNameET.setVisibility(View.GONE);
+            userHeightET.setVisibility(View.GONE);
+            userWeightET.setVisibility(View.GONE);
+            editSaveBtn.setVisibility(View.GONE);
+        }
     }
 
-    /**
-     * A private class within the user profile activity
-     * that handles getting json data from the backend
-     */
+
     private class GetJsonData extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -208,8 +214,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 userNameTV.setText(obj.getString("userName"));
                 realName = obj.getString("firstName") + " " + obj.getString("lastName");
                 userRealNameTV.setText(realName);
-                userHeightTV.setText(obj.getString("weight"));
-                userWeightTV.setText(obj.getString("height"));
+                userHeightTV.setText(obj.getString("height") + " in");
+                userWeightTV.setText(obj.getString("weight") + " lbs");
             }
         }
 
