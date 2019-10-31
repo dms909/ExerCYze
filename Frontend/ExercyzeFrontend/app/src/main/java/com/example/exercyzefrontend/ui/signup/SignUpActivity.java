@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,35 +22,86 @@ import com.example.exercyzefrontend.app.AppController;
 import com.example.exercyzefrontend.ui.login.LoginActivity;
 import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
 import com.example.exercyzefrontend.utils.Const;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.DecimalMin;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.Min;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
+import com.mobsandgeeks.saripaar.annotation.Pattern;
+
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener  {
 
     private String TAG = SignUpActivity.class.getSimpleName();
 
     private String tag_json_obj = "jobj_req";
 
+    private Button signUpButton;
+
+    @NotEmpty(trim = true)
+    @Length(min = 2, max = 30, message = "Invalid input")
+    private EditText firstNameET;
+
+    @NotEmpty(trim = true)
+    @Length(min = 2, max = 30, message = "Invalid input")
+    private EditText lastNameET;
+
+    @NotEmpty(trim = true)
+    @Length(min = 5, max = 15, message = "Invalid input")
+    private EditText userNameET;
+
+    @NotEmpty(trim = true)
+    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE, message = "Invalid input")
+    private EditText passwordET;
+
+    @NotEmpty
+    @Length(min = 2, max = 4)
+    private EditText heightET;
+
+    @NotEmpty
+    @Length(min = 2, max = 5)
+    private EditText weightET;
+
+    private Validator validator;
+
+    private boolean validated;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        initView();
+    }
 
-        final Button signUpButton = findViewById(R.id.signUpCompletBtn);
-        final EditText firstNameET = findViewById(R.id.firstNameSignUpEditText);
-        final EditText lastNameET = findViewById(R.id.lastNameSignUpEditText);
-        final EditText userNameET = findViewById(R.id.userNameSignUpEditText);
-        final EditText passwordET = findViewById(R.id.passwordSignUpEditText);
-        final EditText heightET = findViewById(R.id.heightSignUpEditText);
-        final EditText weightET = findViewById(R.id.weightSignUpEditText);
+    private void initView() {
+        validated = false;
+        signUpButton = findViewById(R.id.signUpCompletBtn);
+        firstNameET = findViewById(R.id.firstNameSignUpEditText);
+        lastNameET = findViewById(R.id.lastNameSignUpEditText);
+        userNameET = findViewById(R.id.userNameSignUpEditText);
+        passwordET = findViewById(R.id.passwordSignUpEditText);
+        heightET = findViewById(R.id.heightSignUpEditText);
+        heightET.setText("0.0");
+        weightET = findViewById(R.id.weightSignUpEditText);
+        weightET.setText("0.0");
 
+        validator =  new Validator(this);
+        validator.setValidationListener(this);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String firstName = firstNameET.getText().toString();
                 String lasttName = lastNameET.getText().toString();
                 String userName = userNameET.getText().toString();
@@ -56,10 +109,23 @@ public class SignUpActivity extends AppCompatActivity {
                 double height = Double.parseDouble(heightET.getText().toString());
                 double weight = Double.parseDouble(weightET.getText().toString());
 
-                postUserModel(firstName, lasttName, userName, password, height, weight);
-                Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
+                validator.validate();
+                if (height == 0.0) {
+                    validated = false;
+                    heightET.setError("Invalid height");
+                }
+                if (weight == 0.0) {
+                    validated = false;
+                    weightET.setError("Invalid height");
+                }
+                if (validated) {
 
-                startActivity(profileActivity);
+                    Toast.makeText(getApplicationContext(),"Profile successfully created!", Toast.LENGTH_SHORT).show();
+                    //postUserModel(firstName, lasttName, userName, password, height, weight);
+                    Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
+
+                    startActivity(profileActivity);
+                }
             }
         });
     }
@@ -103,5 +169,25 @@ public class SignUpActivity extends AppCompatActivity {
         };
 
         AppController.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        Toast.makeText(this, "Profile successfully completed", Toast.LENGTH_SHORT).show();
+        validated = true;
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+            // Display error messages
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

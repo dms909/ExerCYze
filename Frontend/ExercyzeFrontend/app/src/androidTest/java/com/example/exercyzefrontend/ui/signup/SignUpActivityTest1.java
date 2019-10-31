@@ -140,7 +140,7 @@ public class SignUpActivityTest1 {
         textView2.check(matches(withText("fred99")));
 
         ViewInteraction textView3 = onView(
-                allOf(withId(R.id.userRealName), withText("Noahhello there! Freddy"),
+                allOf(withId(R.id.userRealName), withText("Noah Freddy"),
                         childAtPosition(
                                 allOf(withId(R.id.constraintLayout),
                                         childAtPosition(
