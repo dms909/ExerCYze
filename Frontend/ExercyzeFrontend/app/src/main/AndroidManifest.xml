@@ -17,7 +17,7 @@
 
         <activity android:name=".ui.progress.UserProgressActivity"></activity>
         <activity
-            android:name=".ui.userprofile.UserProfileActivity"
+            android:name=".ui.workoutroutine.workoutroutineActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
