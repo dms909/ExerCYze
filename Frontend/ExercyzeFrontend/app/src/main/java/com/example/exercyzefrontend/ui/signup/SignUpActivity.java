@@ -24,6 +24,7 @@ import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
 import com.example.exercyzefrontend.utils.Const;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -47,69 +48,43 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
     private Button signUpButton;
 
-    @NotEmpty
-    @Length(min = 2, max = 30)
+    @NotEmpty(trim = true)
+    @Length(min = 2, max = 30, message = "Invalid input")
     private EditText firstNameET;
 
-    @NotEmpty
-    @Length(min = 2, max = 30)
+    @NotEmpty(trim = true)
+    @Length(min = 2, max = 30, message = "Invalid input")
     private EditText lastNameET;
 
-    @NotEmpty
-    @Length(min = 5, max = 15)
+    @NotEmpty(trim = true)
+    @Length(min = 5, max = 15, message = "Invalid input")
     private EditText userNameET;
 
-    @NotEmpty
-    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE)
+    @NotEmpty(trim = true)
+    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE, message = "Invalid input")
     private EditText passwordET;
 
     @NotEmpty
-    @Length(min = 2, max = 2)
+    @Length(min = 2, max = 4)
     private EditText heightET;
 
     @NotEmpty
-    @Length(min = 2, max = 3)
+    @Length(min = 2, max = 5)
     private EditText weightET;
 
     private Validator validator;
+
+    private boolean validated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
         initView();
-
-        /*
-         signUpButton = findViewById(R.id.signUpCompletBtn);
-         firstNameET = findViewById(R.id.firstNameSignUpEditText);
-         lastNameET = findViewById(R.id.lastNameSignUpEditText);
-         userNameET = findViewById(R.id.userNameSignUpEditText);
-         passwordET = findViewById(R.id.passwordSignUpEditText);
-         heightET = findViewById(R.id.heightSignUpEditText);
-         weightET = findViewById(R.id.weightSignUpEditText);
-
-        signUpButton.setOnClickListener(this);
-        /*
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String firstName = firstNameET.getText().toString();
-                String lasttName = lastNameET.getText().toString();
-                String userName = userNameET.getText().toString();
-                String password = passwordET.getText().toString();
-                double height = Double.parseDouble(heightET.getText().toString());
-                double weight = Double.parseDouble(weightET.getText().toString());
-
-                postUserModel(firstName, lasttName, userName, password, height, weight);
-                Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
-
-                startActivity(profileActivity);
-            }
-        });*/
     }
 
     private void initView() {
+        validated = false;
         signUpButton = findViewById(R.id.signUpCompletBtn);
         firstNameET = findViewById(R.id.firstNameSignUpEditText);
         lastNameET = findViewById(R.id.lastNameSignUpEditText);
@@ -127,8 +102,6 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
             @Override
             public void onClick(View view) {
 
-                boolean empty = false;
-
                 String firstName = firstNameET.getText().toString();
                 String lasttName = lastNameET.getText().toString();
                 String userName = userNameET.getText().toString();
@@ -136,63 +109,26 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 double height = Double.parseDouble(heightET.getText().toString());
                 double weight = Double.parseDouble(weightET.getText().toString());
 
-                if (firstName.isEmpty()) {
-                    firstNameET.setError("Field is empty");
-                    empty = true;
-                }
-                if (lasttName.isEmpty()) {
-                    lastNameET.setError("Field is empty");
-                }
-                if (userName.isEmpty()) {
-                    userNameET.setError("Field is empty");
-                }
-                if (password.isEmpty()) {
-                    passwordET.setError("Field is empty");
-                }
+                validator.validate();
                 if (height == 0.0) {
-                    heightET.setError("Field is empty");
+                    validated = false;
+                    heightET.setError("Invalid height");
                 }
                 if (weight == 0.0) {
-                    weightET.setError("Field is empty");
+                    validated = false;
+                    weightET.setError("Invalid height");
                 }
-                validator.validate();
+                if (validated) {
 
-                //postUserModel(firstName, lasttName, userName, password, height, weight);
-                //Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    Toast.makeText(getApplicationContext(),"Profile successfully created!", Toast.LENGTH_SHORT).show();
+                    //postUserModel(firstName, lasttName, userName, password, height, weight);
+                    Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
 
-                //startActivity(profileActivity);
+                    startActivity(profileActivity);
+                }
             }
         });
     }
-
-//    @Override
-//    public void onValidationSucceeded() {
-//        Toast.makeText(this, "Task Succeded", Toast.LENGTH_SHORT).show();
-//    }
-    /*
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.signUpCompletBtn) {
-            String firstName = firstNameET.getText().toString();
-            String lasttName = lastNameET.getText().toString();
-            String userName = userNameET.getText().toString();
-            String password = passwordET.getText().toString();
-            double height = Double.parseDouble(heightET.getText().toString());
-            double weight = Double.parseDouble(weightET.getText().toString());
-
-            postUserModel(firstName, lasttName, userName, password, height, weight);
-            Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
-
-            startActivity(profileActivity);
-        }
-
-            /*
-        switch(v.getId()) {
-            case R.id.signUpCompletBtn:
-
-                break;
-        }
-    }*/
 
     private void postUserModel(String firstName, String lastName, String userName, String password, double height, double weight){
         final Map<String, String> params = new HashMap<String, String>();
@@ -237,7 +173,8 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(this, "We got it right!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Profile successfully completed", Toast.LENGTH_SHORT).show();
+        validated = true;
     }
 
     @Override
