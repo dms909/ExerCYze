@@ -36,46 +36,30 @@
         app:layout_constraintTop_toBottomOf="@+id/workoutname" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/creator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="24dp"
-        android:text="Description"
+        android:text="Creator's Name"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/workoutinput" />
 
-    <EditText
-        android:id="@+id/descriptioninput"
-        android:layout_width="342dp"
-        android:layout_height="119dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Enter Workout Description"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.108"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
-
     <Button
         android:id="@+id/saveworkout"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="104dp"
         android:text="Save Workout"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addworkout" />
+        app:layout_constraintTop_toBottomOf="@+id/creatorname" />
 
     <Button
         android:id="@+id/nosaveworkout"
@@ -91,29 +75,17 @@
         app:layout_constraintTop_toBottomOf="@+id/saveworkout"
         app:layout_constraintVertical_bias="0.179" />
 
-    <TextView
-        android:id="@+id/Workouts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/creatorname"
+        android:layout_width="351dp"
+        android:layout_height="49dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="44dp"
-        android:text="Workouts"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptioninput" />
-
-    <Button
-        android:id="@+id/addworkout"
-        android:layout_width="180dp"
-        android:layout_height="40dp"
         android:layout_marginTop="24dp"
-        android:text="+ Add New Workout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        android:ems="10"
+        android:hint="Creator"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Workouts" />
+        app:layout_constraintTop_toBottomOf="@+id/creator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,8 +37,8 @@ public class workoutroutineActivity extends AppCompatActivity implements View.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new GetJsonData().execute();
         super.onCreate(savedInstanceState);
+        new GetJsonData().execute();
         setContentView(R.layout.activity_workoutroutine);
         mListView = (ListView) findViewById(R.id.userlist);
         addworkout = (Button) findViewById(R.id.addworkout);
