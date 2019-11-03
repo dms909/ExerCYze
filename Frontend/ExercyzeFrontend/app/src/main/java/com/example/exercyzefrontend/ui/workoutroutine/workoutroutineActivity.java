@@ -77,7 +77,7 @@ public class workoutroutineActivity extends AppCompatActivity implements View.On
         protected Void doInBackground(Void... arg0) {
 
 
-            String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/user";
+            String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/workout-routine";
             try {
                 URL url;
                 HttpURLConnection urlConnection = null;
@@ -127,20 +127,17 @@ public class workoutroutineActivity extends AppCompatActivity implements View.On
         public void parseJson(String json) throws JSONException {
 
             JSONArray jArr = new JSONArray(json);
-            String name = "";
+            String workoutname = "";
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
-                //double latitude= obj.getDouble("latitude");
-                //double longitude= obj.getDouble("longitude");
-                //String placeName= obj.getString("placeName");
-                //userNameTV.setText(obj.getString("userName"));
-                //realName = obj.getString("firstName") + " " + obj.getString("lastName");
-                //userRealNameTV.setText(realName);
-                //userHeightTV.setText(obj.getString("height") + " in");
-                //userWeightTV.setText(obj.getString("weight") + " lbs");
-                name = obj.getString("lastName");
-                value.add(name);
+                workoutname = obj.getString("workoutRoutineName");
+                if(workoutname == "null") {
+                    // do nothing
+                }
+                else {
+                    value.add(workoutname);
+                }
 
             }
         }
