@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequestMapping("api/user")
@@ -43,6 +44,15 @@ public class UserController {
     @DeleteMapping(path="{id}")
     public void deleteUserById(@PathVariable("id") Integer id){
         db.deleteById(id);
+    }
+
+    @GetMapping(path="authenticate")
+    public boolean authenticateUserByUserName(@RequestBody Map<String, String> user){
+        User toAuthenticate = db.findByUserName(user.get("userName"));
+        if(!toAuthenticate.getPassword().equals(user.get("password"))){
+            return false;
+        }
+        return true;
     }
 
     /*@PutMapping(path="{id}")
