@@ -47,7 +47,7 @@ public class webChatActivity extends AppCompatActivity {
                  * computer, and change the ip address to that of your computer.
                  * If running on the emulator, you can use localhost.
                  */
-                String w = "localhost"+e1.getText().toString();
+                String w = "ws://10.26.13.93:8080/websocket/"+e1.getText().toString();
 
                 try {
                     Log.d("Socket:", "Trying socket");
