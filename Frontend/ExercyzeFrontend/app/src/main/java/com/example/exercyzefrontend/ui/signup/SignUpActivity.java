@@ -47,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
     private String tag_json_obj = "jobj_req";
 
     private Button signUpButton;
+    private Button returnToLoginButton;
 
     @NotEmpty(trim = true)
     @Length(min = 2, max = 30, message = "Invalid input")
@@ -86,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
     private void initView() {
         validated = false;
         signUpButton = findViewById(R.id.signUpCompletBtn);
+        returnToLoginButton = findViewById(R.id.returnToLoginBtn);
         firstNameET = findViewById(R.id.firstNameSignUpEditText);
         lastNameET = findViewById(R.id.lastNameSignUpEditText);
         userNameET = findViewById(R.id.userNameSignUpEditText);
@@ -98,6 +100,14 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         validator =  new Validator(this);
         validator.setValidationListener(this);
 
+        returnToLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+
+                startActivity(loginActivity);
+            }
+        });
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
