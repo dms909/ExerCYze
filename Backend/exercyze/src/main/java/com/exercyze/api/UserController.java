@@ -48,6 +48,10 @@ public class UserController {
 
     @GetMapping(path="authenticate")
     public boolean authenticateUserByUserName(@RequestBody Map<String, String> user){
+        System.out.println(user);
+        System.out.println(user);
+        System.out.println(user);
+        System.out.println(user);
         User toAuthenticate = db.findByUserName(user.get("userName"));
         if(!toAuthenticate.getPassword().equals(user.get("password"))){
             return false;
