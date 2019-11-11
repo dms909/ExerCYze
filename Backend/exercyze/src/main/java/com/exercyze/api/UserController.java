@@ -2,11 +2,13 @@ package com.exercyze.api;
 
 import com.exercyze.dao.UserDao;
 import com.exercyze.model.User;
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -47,15 +49,14 @@ public class UserController {
     }
 
     @GetMapping(path="authenticate")
-    public boolean authenticateUserByUserName(@RequestBody Map<String, String> user){
+    public boolean authenticateUserByUserName(@RequestBody HashMap<String, String> user){
         System.out.println(user);
         System.out.println(user);
         System.out.println(user);
-        System.out.println(user);
-        User toAuthenticate = db.findByUserName(user.get("userName"));
+        /*User toAuthenticate = db.findByUserName(user.get("userName"));
         if(!toAuthenticate.getPassword().equals(user.get("password"))){
             return false;
-        }
+        }*/
         return true;
     }
 
