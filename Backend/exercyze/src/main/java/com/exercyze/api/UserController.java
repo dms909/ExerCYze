@@ -49,7 +49,7 @@ public class UserController {
         db.deleteById(id);
     }
 
-    @GetMapping(path="authenticate")
+    @PostMapping(path="authenticate")
     public boolean authenticateUserByUserName(@RequestBody User user){
         User toAuthenticate = db.findByUserName(user.getUserName());
         if(!toAuthenticate.getPassword().equals(user.getPassword())){
