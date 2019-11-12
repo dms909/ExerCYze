@@ -50,16 +50,16 @@ public class UserController {
     }
 
     @PostMapping(path="authenticate")
-    public boolean authenticateUserByUserName(@RequestBody HashMap<String, String> user){
+    public boolean authenticateUserByUserName(@RequestBody User user){
         System.out.println("LOOK HERE");
         System.out.println("LOOK HERE");
         System.out.println("LOOK HERE");
         System.out.println("LOOK HERE");
         System.out.println("LOOK HERE");
         System.out.println("LOOK HERE");
-        System.out.println("User " + user.get("userName"));
-        User toAuthenticate = db.findByUserName(user.get("userName"));
-        if(!toAuthenticate.getPassword().equals(user.get("password"))){
+        System.out.println("User " + user.getUserName());
+        User toAuthenticate = db.findByUserName(user.getUserName());
+        if(!toAuthenticate.getPassword().equals(user.getPassword())){
             return false;
         }
         return true;
