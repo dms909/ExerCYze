@@ -51,13 +51,6 @@ public class UserController {
 
     @PostMapping(path="authenticate")
     public boolean authenticateUserByUserName(@RequestBody User user){
-        System.out.println("LOOK HERE");
-        System.out.println("LOOK HERE");
-        System.out.println("LOOK HERE");
-        System.out.println("LOOK HERE");
-        System.out.println("LOOK HERE");
-        System.out.println("LOOK HERE");
-        System.out.println("User " + user.getUserName());
         User toAuthenticate = db.findByUserName(user.getUserName());
         if(!toAuthenticate.getPassword().equals(user.getPassword())){
             return false;
