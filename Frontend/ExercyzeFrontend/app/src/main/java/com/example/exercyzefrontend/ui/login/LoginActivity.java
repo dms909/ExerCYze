@@ -42,6 +42,7 @@ import com.example.exercyzefrontend.ui.signup.SignUpActivity;
 import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
 import com.example.exercyzefrontend.utils.Const;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -146,7 +147,13 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.d(TAG, response.toString());
-                                loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                                try {
+                                    if(response.getBoolean("authenticated")){
+                                        loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
