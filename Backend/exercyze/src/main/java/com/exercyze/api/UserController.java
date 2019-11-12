@@ -53,19 +53,22 @@ public class UserController {
     }
 
     @PostMapping(path="authenticate")
-    @ResponseStatus(HttpStatus.OK)
-    public void authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
+    public @ResponseBody String authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
+        JSONObject jsonObject = null;
         try {
-            JSONObject jsonObject = new JSONObject(password);
+            jsonObject = new JSONObject(password);
             User toAuthenticate = db.findByUserName(userName);
             if(!toAuthenticate.getPassword().equals(jsonObject.getString("password"))){
-                throw new IOException();
+                jsonObject.put("authenticated", false);
+            }
+            else{
+                jsonObject.put("authenticated", true);
             }
         }
-        catch (Exception e){
-            System.out.println("Error");
-            throw new HTTPException(e.hashCode());
+        catch (Exception e) {
+            e.printStackTrace();
         }
+        return jsonObject.toString();
     }
 
     /*@PutMapping(path="{id}")
