@@ -5,19 +5,14 @@ package com.example.exercyzefrontend.data.model;
  */
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    private String userName;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
+    public LoggedInUser(String userName) {
+        this.userName = userName;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }
