@@ -131,7 +131,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 if (validated) {
 
                     Toast.makeText(getApplicationContext(),"Profile successfully created!", Toast.LENGTH_SHORT).show();
-                    //postUserModel(firstName, lasttName, userName, password, height, weight);
+                    postUserModel(firstName, lasttName, userName, password, height, weight);
                     Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
 
                     startActivity(profileActivity);
@@ -151,7 +151,6 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Const.URL_USER_OBJECT, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
@@ -179,6 +178,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         };
 
         AppController.getInstance().addToRequestQueue(jsonObjReq);
+
     }
 
     @Override

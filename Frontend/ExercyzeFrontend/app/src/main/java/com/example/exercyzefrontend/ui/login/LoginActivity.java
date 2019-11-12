@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -23,12 +24,34 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.exercyzefrontend.R;
+import com.example.exercyzefrontend.app.AppController;
+import com.example.exercyzefrontend.data.LoginDataSource;
+import com.example.exercyzefrontend.data.model.LoggedInUser;
 import com.example.exercyzefrontend.ui.signup.SignUpActivity;
+import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
+import com.example.exercyzefrontend.utils.Const;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+
+    private String TAG = LoginActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,8 +137,44 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                final Map<String, String> params = new HashMap<String, String>();
+                String url = Const.URL_USER_AUTHENTICATION + "?userName=" + usernameEditText.getText().toString();
+                params.put("password", passwordEditText.getText().toString());
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                        url, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.d(TAG, response.toString());
+                                loginViewModel.login(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError) {
+                            Log.i(TAG, "onErrorResponse: timeout error" );
+                        } else if (error instanceof ServerError) {
+                            Log.i(TAG, "onErrorResponse: server error");
+                        } else if (error instanceof NetworkError) {
+                            //toast or log your error
+                        } else if (error instanceof ParseError) {
+                            Log.i(TAG, "onErrorResponse: parse error" );
+                            error.printStackTrace();
+                        } else {
+                            Log.i(TAG, "onErrorResponse: Something went wrong ");
+                        }
+
+                    }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        return headers;
+                    }
+                };
+                AppController.getInstance().addToRequestQueue(jsonObjReq);
+
             }
         });
 
@@ -133,9 +192,9 @@ public class LoginActivity extends AppCompatActivity {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
 
-        /*Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+        Intent mainActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
 
-        startActivity(mainActivity);*/
+        startActivity(mainActivity);
 
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
