@@ -5,10 +5,13 @@ import com.exercyze.model.User;
 import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.ws.http.HTTPException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,12 +53,19 @@ public class UserController {
     }
 
     @PostMapping(path="authenticate")
-    public boolean authenticateUserByUserName(@RequestBody User user){
-        User toAuthenticate = db.findByUserName(user.getUserName());
-        if(!toAuthenticate.getPassword().equals(user.getPassword())){
-            return false;
+    @ResponseStatus(HttpStatus.OK)
+    public void authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
+        try {
+            JSONObject jsonObject = new JSONObject(password);
+            User toAuthenticate = db.findByUserName(userName);
+            if(!toAuthenticate.getPassword().equals(jsonObject.getString("password"))){
+                throw new IOException();
+            }
         }
-        return true;
+        catch (Exception e){
+            System.out.println("Error");
+            throw new HTTPException(e.hashCode());
+        }
     }
 
     /*@PutMapping(path="{id}")
