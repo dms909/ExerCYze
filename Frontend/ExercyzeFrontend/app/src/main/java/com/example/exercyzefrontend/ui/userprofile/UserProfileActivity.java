@@ -214,18 +214,13 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
-                //if (obj.getString("userName").equals(userNameStr)) {
-                    //double latitude= obj.getDouble("latitude");
-                    //double longitude= obj.getDouble("longitude");
-                    //String placeName= obj.getString("placeName");
-                    //userNameTV.setText(obj.getString("userName"));
-                    //userNameTV.setText("null");
+                if (obj.getString("userName").equals(userNameStr)) {
                     userNameTV.setText(userNameStr);
                     realName = obj.getString("firstName") + " " + obj.getString("lastName");
                     userRealNameTV.setText(realName);
                     userHeightTV.setText(obj.getString("height") + " in");
                     userWeightTV.setText(obj.getString("weight") + " lbs");
-                //}
+                }
             }
         }
 
