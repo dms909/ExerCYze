@@ -97,7 +97,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.progressBtn:
                 Intent userProgressIntent = new Intent(getApplicationContext(), UserProgressActivity.class);
-
+                userProgressIntent.putExtra("user_name", userNameStr);
                 startActivity(userProgressIntent);
                 break;
 
