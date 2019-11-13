@@ -54,6 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private String TAG = LoginActivity.class.getSimpleName();
 
+    private String userName = "";
+
+    private String password = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,15 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final Button registerButton = findViewById(R.id.signup);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        Intent loginIntent = getIntent();
+        userName = loginIntent.getStringExtra("user_Name");
+        password = loginIntent.getStringExtra("password");
+
+        if ((userName != null) && (password != null)) {
+            usernameEditText.setText(userName);
+            passwordEditText.setText(password);
+        }
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
