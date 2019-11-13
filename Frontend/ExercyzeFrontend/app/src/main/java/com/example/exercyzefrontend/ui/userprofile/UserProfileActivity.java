@@ -40,6 +40,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     boolean editMode;
     private Button editSaveBtn;
     private String finalresult;
+    private String userNameStr = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,12 +49,18 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         editMode = false;
 
+        Intent profileIntent = getIntent();
+        userNameStr = profileIntent.getStringExtra("user_name");
+        //variable for constraint layout
+        //used when entering edit mode
         userProfileCL = findViewById(R.id.userProfileCL);
 
         userNameTV = (TextView) findViewById(R.id.user_Name);
         userRealNameTV = (TextView) findViewById(R.id.userRealName);
         userHeightTV = (TextView) findViewById(R.id.userHeight);
         userWeightTV = (TextView) findViewById(R.id.userWeight);
+
+
 
         userRealNameET = (EditText) findViewById(R.id.userRealNameET);
         userHeightET = (EditText) findViewById(R.id.userHeightET);
@@ -62,7 +69,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         userRealNameET.setVisibility(View.GONE);
         userHeightET.setVisibility(View.GONE);
         userWeightET.setVisibility(View.GONE);
-
 
         workoutBtn = (Button) findViewById(R.id.workoutBtn);
         progressBtn = (Button) findViewById(R.id.progressBtn);
@@ -208,14 +214,18 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
-                //double latitude= obj.getDouble("latitude");
-                //double longitude= obj.getDouble("longitude");
-                //String placeName= obj.getString("placeName");
-                userNameTV.setText(obj.getString("userName"));
-                realName = obj.getString("firstName") + " " + obj.getString("lastName");
-                userRealNameTV.setText(realName);
-                userHeightTV.setText(obj.getString("height") + " in");
-                userWeightTV.setText(obj.getString("weight") + " lbs");
+                //if (obj.getString("userName").equals(userNameStr)) {
+                    //double latitude= obj.getDouble("latitude");
+                    //double longitude= obj.getDouble("longitude");
+                    //String placeName= obj.getString("placeName");
+                    //userNameTV.setText(obj.getString("userName"));
+                    //userNameTV.setText("null");
+                    userNameTV.setText(userNameStr);
+                    realName = obj.getString("firstName") + " " + obj.getString("lastName");
+                    userRealNameTV.setText(realName);
+                    userHeightTV.setText(obj.getString("height") + " in");
+                    userWeightTV.setText(obj.getString("weight") + " lbs");
+                //}
             }
         }
 
