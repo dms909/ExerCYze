@@ -54,6 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private String TAG = LoginActivity.class.getSimpleName();
 
+    private String userNameStr = "";
+
+    private String passwordStr = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,15 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerButton = findViewById(R.id.signup);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
+        Intent loginIntent = getIntent();
+        userNameStr = loginIntent.getStringExtra("user_Name");
+        passwordStr = loginIntent.getStringExtra("password");
+
+        if ((userNameStr != null) && (passwordStr != null)) {
+            usernameEditText.setText(userNameStr);
+            passwordEditText.setText(passwordStr);
+        }
+
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
@@ -78,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
+                    userNameStr = usernameEditText.getText().toString();
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
                 }
             }
@@ -197,11 +211,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
+
         // TODO : initiate successful logged in experience
 
-        Intent mainActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
-
-        startActivity(mainActivity);
+        Intent profileActivity = new Intent(LoginActivity.this, UserProfileActivity.class);
+        profileActivity.putExtra("user_name", userNameStr);
+        startActivity(profileActivity);
 
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }

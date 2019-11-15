@@ -119,6 +119,8 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 double height = Double.parseDouble(heightET.getText().toString());
                 double weight = Double.parseDouble(weightET.getText().toString());
 
+
+
                 validator.validate();
                 if (height == 0.0) {
                     validated = false;
@@ -132,9 +134,10 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
                     Toast.makeText(getApplicationContext(),"Profile successfully created!", Toast.LENGTH_SHORT).show();
                     postUserModel(firstName, lasttName, userName, password, height, weight);
-                    Intent profileActivity = new Intent(getApplicationContext(), UserProfileActivity.class);
-
-                    startActivity(profileActivity);
+                    Intent loginActivity = new Intent(SignUpActivity.this, LoginActivity.class);
+                    loginActivity.putExtra("user_Name", userName);
+                    loginActivity.putExtra("password",password);
+                    startActivity(loginActivity);
                 }
             }
         });

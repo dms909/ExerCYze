@@ -56,6 +56,9 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         userWeightBC = (BarChart) findViewById(R.id.userProgressBC);
         addEntryBtn = (Button) findViewById(R.id.addEntryBtn);
 
+        String userNameStr = getIntent().getStringExtra("user_name") + "'s Progress";
+        userTitleTV.setText(userNameStr);
+
         addEntryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +84,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         userWeightBC.setScaleEnabled(true);
         barEntryIndex++;
 
-        new GetJsonData().execute();
+        //new GetJsonData().execute();
     }
 
     public void openEntryDialog() {
