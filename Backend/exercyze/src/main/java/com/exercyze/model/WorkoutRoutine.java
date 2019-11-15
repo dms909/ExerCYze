@@ -19,13 +19,11 @@ public class WorkoutRoutine {
     @Column(name = "workout_routine_creator")
     private String workoutRoutineCreator;
 
-    //List<Workout> workoutList = new ArrayList<Workout>();
 
     public WorkoutRoutine(Integer id, String workoutRoutineName, String workoutRoutineCreator) {
         this.id = id;
         this.workoutRoutineName = workoutRoutineName;
         this.workoutRoutineCreator = workoutRoutineCreator;
-        //this.workoutList = null;
     }
 
     public WorkoutRoutine(){
@@ -45,8 +43,4 @@ public class WorkoutRoutine {
     public String getWorkoutRoutineCreator() {
         return workoutRoutineCreator;
     }
-
-    /*public List<Workout> getWorkoutList() {
-        return workoutList;
-    }*/
 }

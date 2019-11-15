@@ -1,5 +1,6 @@
 package com.exercyze.api;
 
+import com.exercyze.dao.WorkoutDao;
 import com.exercyze.dao.WorkoutRoutineDao;
 import com.exercyze.model.Workout;
 import com.exercyze.model.WorkoutRoutine;
@@ -16,22 +17,22 @@ import java.util.Optional;
 public class WorkoutRoutineController {
 
     @Autowired
-    WorkoutRoutineDao db;
+    WorkoutRoutineDao routineDao;
 
     @PostMapping
     public void addWorkoutRoutine(@Valid @NonNull @RequestBody WorkoutRoutine workoutRoutine){
-        db.save(workoutRoutine);
+        routineDao.save(workoutRoutine);
     }
 
     @GetMapping(path = "{id}")
     public WorkoutRoutine getWorkoutRoutineById(@PathVariable Integer id){
-        WorkoutRoutine toReturn =  db.findWorkoutRoutineById(id);
+        WorkoutRoutine toReturn =  routineDao.findWorkoutRoutineById(id);
         return toReturn;
     }
 
     @GetMapping
     public List<WorkoutRoutine> getAllWorkoutRoutine(){
-        return db.findAll();
+        return routineDao.findAll();
     }
 
    /*@GetMapping(path = "{id}")
