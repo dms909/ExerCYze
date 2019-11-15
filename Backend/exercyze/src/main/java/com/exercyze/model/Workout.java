@@ -1,16 +1,17 @@
 package com.exercyze.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="workout")
 public class Workout {
 
     @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int workoutId;
+
     @Column(name = "workoutName")
     private String workoutName;
 
@@ -30,7 +31,8 @@ public class Workout {
     private int workoutRoutineId;
 
 
-    public Workout(String workoutName, int reps, int sets, String muscleGroup, int weight, int workoutRoutineId) {
+    public Workout(int workoutId, String workoutName, int reps, int sets, String muscleGroup, int weight, int workoutRoutineId) {
+        this.workoutId = workoutId;
         this.workoutName = workoutName;
         this.reps = reps;
         this.sets = sets;
@@ -45,6 +47,10 @@ public class Workout {
         this.sets = 0;
         this.muscleGroup = null;
         this.weight = 0;
+    }
+
+    public int getWorkoutId() {
+        return workoutId;
     }
 
     public String getWorkoutName() {
