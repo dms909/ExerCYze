@@ -40,8 +40,8 @@ public class workoutroutineActivity extends AppCompatActivity implements View.On
         new GetJsonData().execute();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workoutroutine);
-        mListView = (ListView) findViewById(R.id.userlist);
-        addworkout = (Button) findViewById(R.id.addworkout);
+        mListView = (ListView) findViewById(R.id.userRoutineList);
+        addworkout = (Button) findViewById(R.id.addRoutineBtn);
         exitworkout = (Button) findViewById(R.id.exitworkout);
         addworkout.setOnClickListener(this);
         exitworkout.setOnClickListener(this);
@@ -53,7 +53,7 @@ public class workoutroutineActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.addworkout:
+            case R.id.addRoutineBtn:
                 //TO DO
                 break;
 
