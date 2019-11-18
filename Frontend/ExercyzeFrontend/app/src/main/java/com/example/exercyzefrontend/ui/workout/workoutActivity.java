@@ -32,12 +32,14 @@ import java.util.Map;
 
 import com.example.exercyzefrontend.R;
 
-public class workoutActivity extends AppCompatActivity {
+public class workoutActivity extends AppCompatActivity implements WorkoutEntryDialog.WorkoutEntryDialogListener {
 
 
     private String TAG = workoutActivity.class.getSimpleName();
     private String tag_json_obj = "jobj_req";
     private ListView listView;
+    ArrayAdapter arrayAdapter;
+    ArrayList<String> routineList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +47,29 @@ public class workoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_workout);
 
         listView = findViewById(R.id.routineListView);
-        ArrayList<String> routineList = new ArrayList<>();
+        //ArrayList<String> routineList = new ArrayList<>();
+        routineList = new ArrayList<>();
 
         routineList.add("Bench \t \t 3 x 10");
         routineList.add("Bicep Curls \t \t 5 x 8");
         routineList.add("Tricep Curls \t \t 5 x 8");
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
         listView.setAdapter(arrayAdapter);
 
+        final Button addItemBtn = (Button) findViewById(R.id.workoutItemAddBtn);
+        final Button delItemBtn = (Button) findViewById(R.id.workoutItemDeleteBtn);
         final Button saveworkout = (Button) findViewById(R.id.saveworkout);
         final Button nosaveworkout = (Button) findViewById(R.id.nosaveworkout);
         final TextView workoutname = (TextView) findViewById(R.id.workoutName);
         final EditText workoutinput = (EditText) findViewById(R.id.workoutInput);
+
+        addItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openEntryDialog();
+            }
+        });
 
         saveworkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +89,18 @@ public class workoutActivity extends AppCompatActivity {
                 startActivity(routineActivty);
             }
         });
+    }
+
+    public void openEntryDialog() {
+        WorkoutEntryDialog entryDialog = new WorkoutEntryDialog();
+        entryDialog.show(getSupportFragmentManager(), "workout entry dialog");
+    }
+
+    @Override
+    public void applyValue(String workoutItemEntryStr, int setEntry, int repEntry){
+        routineList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        listView.setAdapter(arrayAdapter);
     }
 
     private void postUserModel(String workout, Double sets, double reps){
