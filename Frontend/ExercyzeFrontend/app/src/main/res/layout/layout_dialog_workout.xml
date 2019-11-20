@@ -4,13 +4,13 @@
     android:padding="16dp">
 
     <EditText
-        android:id="@+id/itemEntryET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:hint="Workout Item"
-        android:inputType="text" />
+    android:id="@+id/itemEntryET"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="10dp"
+    android:hint="Workout Item"
+    android:inputType="text" />
 
     <EditText
         android:id="@+id/setEntryET"

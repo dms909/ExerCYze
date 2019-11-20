@@ -94,7 +94,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.workoutBtn:
-                Intent workoutIntent = new Intent(UserProfileActivity.this, workoutActivity.class);
+                Intent workoutIntent = new Intent(UserProfileActivity.this, workoutroutineActivity.class);
                 startActivity(workoutIntent);
                 break;
 

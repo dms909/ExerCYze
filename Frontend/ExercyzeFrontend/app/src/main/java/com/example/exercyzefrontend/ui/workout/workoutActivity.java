@@ -50,19 +50,15 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         //ArrayList<String> routineList = new ArrayList<>();
         routineList = new ArrayList<>();
 
-        routineList.add("Bench \t \t 3 x 10");
-        routineList.add("Bicep Curls \t \t 5 x 8");
-        routineList.add("Tricep Curls \t \t 5 x 8");
-
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
         listView.setAdapter(arrayAdapter);
 
         final Button addItemBtn = (Button) findViewById(R.id.workoutItemAddBtn);
         final Button delItemBtn = (Button) findViewById(R.id.workoutItemDeleteBtn);
-        final Button saveworkout = (Button) findViewById(R.id.saveworkout);
-        final Button nosaveworkout = (Button) findViewById(R.id.nosaveworkout);
-        final TextView workoutname = (TextView) findViewById(R.id.workoutName);
-        final EditText workoutinput = (EditText) findViewById(R.id.workoutInput);
+        final Button saveBtn = (Button) findViewById(R.id.saveBtn);
+        final Button discardBtn = (Button) findViewById(R.id.discardBtn);
+        //final TextView routineName = (TextView) findViewById(R.id.routineName);
+        final EditText routineName = (EditText) findViewById(R.id.routineNameET);
 
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +67,10 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
             }
         });
 
-        saveworkout.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String workout = workoutinput.getText().toString();
+                String routineNameInput = routineName.getText().toString();
 
                 //postUserModel(workout, creator);
                 Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
@@ -82,7 +78,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 startActivity(routineActivty);
             }
         });
-        nosaveworkout.setOnClickListener(new View.OnClickListener() {
+        discardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
@@ -103,9 +99,11 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         listView.setAdapter(arrayAdapter);
     }
 
-    private void postUserModel(String workout, Double sets, double reps){
+    private void postUserModel(String workoutName, int sets, int reps){
         final Map<String, String> params = new HashMap<String, String>();
-        params.put("workoutRoutineName", workout);
+        params.put("workoutName", workoutName);
+        params.put("reps", reps + "");
+        params.put("sets", sets +  ""); 
         //params.put("workoutRoutineCreator", sets);
         //params.put("workoutRoutineCreator", reps);
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,

@@ -1,4 +1,4 @@
-package com.example.exercyzefrontend.ui.workout;
+package com.example.exercyzefrontend.ui.workoutroutine;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,41 +15,35 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.exercyzefrontend.R;
 
-public class WorkoutEntryDialog extends AppCompatDialogFragment {
-    private EditText workoutItemEntryET;
-    private EditText setEntryET;
-    private EditText repEntryET;
-    private WorkoutEntryDialogListener listener;
+public class WorkoutNameEntryDialog extends AppCompatDialogFragment {
+    private EditText workoutNameEntryET;
+    private WorkoutNameEntryDialogListener listener;
 
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_dialog_workout, null);
+        View view = inflater.inflate(R.layout.layout_dialog_workout_name, null);
 
         builder.setView(view)
-                .setTitle("Add Workout Item")
+                .setTitle("Add Workout Routine")
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 })
-                .setPositiveButton("Add Item", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Add Name", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //String weightStr = weightEntryET.getText().toString();
-                        String workoutItem = workoutItemEntryET.getText().toString();
-                        int setVal = Integer.parseInt(setEntryET.getText().toString());
-                        int repVal = Integer.parseInt(repEntryET.getText().toString());
-                        double test = 0.0;
-                        listener.applyValue(workoutItem, setVal, repVal);
+                        String workoutName = workoutNameEntryET.getText().toString();
+
+                        listener.applyValue(workoutName);
                     }
                 });
-        workoutItemEntryET = view.findViewById(R.id.itemEntryET);
-        setEntryET = view.findViewById(R.id.setEntryET);
-        repEntryET = view.findViewById(R.id.repEntryET);
+        workoutNameEntryET = view.findViewById(R.id.nameEntryET);
 
         return builder.create();
     }
@@ -59,14 +53,14 @@ public class WorkoutEntryDialog extends AppCompatDialogFragment {
         super.onAttach(context);
 
         try {
-            listener = (WorkoutEntryDialogListener) context;
+            listener = (WorkoutNameEntryDialogListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement WorkoutEntryDialog Listener");
+            throw new ClassCastException(context.toString() + "must implement WorkoutNameEntryDialog Listener");
         }
     }
 
-    public interface WorkoutEntryDialogListener {
-        void applyValue(String workoutItemEntryStr, int setEntry, int repEntry);
+    public interface WorkoutNameEntryDialogListener {
+        void applyValue(String workoutNameEntryStr);
         //add weight entry her
     }
 }

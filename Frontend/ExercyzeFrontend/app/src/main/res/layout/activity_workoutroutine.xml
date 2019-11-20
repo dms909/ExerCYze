@@ -1,79 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.workoutroutine.workoutroutineActivity">
+    tools:context=".ui.workout.workoutActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/routineTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="16dp"
+        android:text="User's Workout Routine Hub"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/userRoutineList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/routineTitleTV">
 
-        <ListView
-            android:id="@+id/userRoutineList"
-            android:layout_width="match_parent"
-            android:layout_height="437dp"
-            android:layout_weight="1"
-            android:divider="@color/colorPrimary"
-            android:dividerHeight="2dp" />
+    </ListView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp" >
+    <Button
+        android:id="@+id/addRoutineBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="464dp"
+        android:layout_weight="0"
+        android:text="+ Add New Workout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/addRoutineBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_weight="0"
-                    android:text="+ Add New Workout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/deleteRoutineBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_weight="0"
-                    android:text="- Delete Old Workout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/editRoutineBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="120dp"
-                    android:layout_marginLeft="120dp"
-                    android:layout_marginTop="76dp"
-                    android:layout_weight="0"
-                    android:text="* Edit Old Workout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/exitworkout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="140dp"
-                    android:layout_marginLeft="140dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="0"
-                    android:text="Exit and Save"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editRoutineBtn" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/deleteRoutineBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="464dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_weight="0"
+        android:text="- Delete Old Workout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</LinearLayout>
+    <Button
+        android:id="@+id/exitworkout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="24dp"
+        android:layout_weight="0"
+        android:text="Exit and Save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addRoutineBtn" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
