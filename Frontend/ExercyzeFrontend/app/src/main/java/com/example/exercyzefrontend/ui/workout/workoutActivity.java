@@ -47,6 +47,9 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         setContentView(R.layout.activity_workout);
 
         listView = findViewById(R.id.routineListView);
+        String routineNameStr = "";
+        Intent workoutViewItemIntent = getIntent();
+        routineNameStr = workoutViewItemIntent.getStringExtra("workout_name");
         //ArrayList<String> routineList = new ArrayList<>();
         routineList = new ArrayList<>();
 
@@ -59,6 +62,8 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         final Button discardBtn = (Button) findViewById(R.id.discardBtn);
         //final TextView routineName = (TextView) findViewById(R.id.routineName);
         final EditText routineName = (EditText) findViewById(R.id.routineNameET);
+
+        routineName.setText(routineNameStr);
 
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
