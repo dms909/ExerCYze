@@ -105,6 +105,9 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     }
 
     private void postUserModel(String workoutName, int sets, int reps){
+        //TODO
+        //need to fix postUserModel to send workout items which are going to be attached
+        //to the workoutroutine id from backend
         final Map<String, String> params = new HashMap<String, String>();
         params.put("workoutName", workoutName);
         params.put("reps", reps + "");
