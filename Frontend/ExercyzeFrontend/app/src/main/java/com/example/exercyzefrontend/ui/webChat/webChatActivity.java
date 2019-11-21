@@ -29,6 +29,7 @@ public class webChatActivity extends AppCompatActivity {
     private WebSocketClient cc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_chat);
         b1=(Button)findViewById(R.id.bt1);
@@ -47,7 +48,7 @@ public class webChatActivity extends AppCompatActivity {
                  * computer, and change the ip address to that of your computer.
                  * If running on the emulator, you can use localhost.
                  */
-                String w = "ws://10.26.13.93:8080/websocket/"+e1.getText().toString();
+                String w = "ws://coms-309-sb-7.misc.iastate.edu:8080/websocket/"+e1.getText().toString();
 
                 try {
                     Log.d("Socket:", "Trying socket");
@@ -56,11 +57,7 @@ public class webChatActivity extends AppCompatActivity {
                         public void onMessage(String message) {
                             Log.d("", "run() returned: " + message);
                             String s=t1.getText().toString();
-                            //t1.setText("hello world");
-                            //Log.d("first", "run() returned: " + s);
-                            //s=t1.getText().toString();
-                            //Log.d("second", "run() returned: " + s);
-                            t1.setText(s+" Server:"+message);
+                            t1.setText(s+"\n"+message);
                         }
 
                         @Override
