@@ -49,6 +49,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
     Button addworkout, exitworkout;
     private String finalresult;
     ArrayList<String> routineNameList;
+    ArrayList<WorkoutRoutine> workoutRoutineViewList;
     String creator;
     URL url;
 
@@ -58,6 +59,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workoutroutine);
 
+
         mListView = (ListView) findViewById(R.id.userRoutineList);
         addworkout = (Button) findViewById(R.id.addRoutineBtn);
         exitworkout = (Button) findViewById(R.id.exitworkout);
@@ -65,6 +67,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         creator = getIntent().getStringExtra("user_name");
 
         routineNameList = new ArrayList<>();
+        workoutRoutineViewList = new ArrayList<>();
 
         //new GetJsonData().execute();
 
@@ -75,9 +78,13 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String workoutViewStr = "";
-                workoutViewStr = routineNameList.get(i);
+                int workoutID = 0;
+                //workoutViewStr = routineNameList.get(i);
+                workoutViewStr = workoutRoutineViewList.get(i).getWorkoutRoutineName();
+                workoutID = workoutRoutineViewList.get(i).getWorkoutRoutineID();
                 Intent workoutItemIntent = new Intent(workoutroutineActivity.this, workoutActivity.class);
                 workoutItemIntent.putExtra("workout_name", workoutViewStr);
+                workoutItemIntent.putExtra("workout_id", workoutID+"");
                 startActivity(workoutItemIntent);
             }
         });
@@ -187,15 +194,19 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
 
             JSONArray jArr = new JSONArray(json);
             String workoutname = "";
+            String workoutID = "";
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 if (obj.getString("workoutRoutineCreator").equals(creator)) {
                     workoutname = obj.getString("workoutRoutineName");
+                    workoutID = obj.getString("id");
                     if (workoutname == "null") {
                         // do nothing
                     } else {
                         routineNameList.add(workoutname);
+
+                        workoutRoutineViewList.add(new WorkoutRoutine((Integer.parseInt(workoutID)), workoutname,creator));
                     }
                 }
 

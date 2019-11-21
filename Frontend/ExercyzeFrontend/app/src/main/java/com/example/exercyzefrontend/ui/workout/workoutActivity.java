@@ -3,6 +3,7 @@ package com.example.exercyzefrontend.ui.workout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,8 +25,16 @@ import com.example.exercyzefrontend.ui.login.LoginActivity;
 import com.example.exercyzefrontend.ui.workoutroutine.workoutroutineActivity;
 import com.example.exercyzefrontend.utils.Const;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,9 +46,13 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
     private String TAG = workoutActivity.class.getSimpleName();
     private String tag_json_obj = "jobj_req";
+    private String finalresult;
     private ListView listView;
-    ArrayAdapter arrayAdapter;
-    ArrayList<String> routineList;
+    private ArrayAdapter arrayAdapter;
+    private ArrayList<String> routineList;
+    private ArrayList<Workout> routineWorkoutList;
+    private String routineNameStr;
+    private String routineID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +60,18 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         setContentView(R.layout.activity_workout);
 
         listView = findViewById(R.id.routineListView);
-        String routineNameStr = "";
+
         Intent workoutViewItemIntent = getIntent();
         routineNameStr = workoutViewItemIntent.getStringExtra("workout_name");
+        routineID = workoutViewItemIntent.getStringExtra("workout_id");
+
+        System.out.println("This is the routine id " + routineID);
+
         //ArrayList<String> routineList = new ArrayList<>();
         routineList = new ArrayList<>();
+        routineWorkoutList = new ArrayList<>();
+
+        new GetJsonData().execute();
 
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
         listView.setAdapter(arrayAdapter);
@@ -75,12 +95,17 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String routineNameInput = routineName.getText().toString();
-
+                /*String routineNameInput = routineName.getText().toString();
                 //postUserModel(workout, creator);
                 Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
+                startActivity(routineActivty);*/
 
-                startActivity(routineActivty);
+                for(int i=0; i<routineList.size(); i++) {
+                    String newWorkoutItem = routineWorkoutList.get(i).getWorkoutItem();
+                    int newSets = routineWorkoutList.get(i).getSets();
+                    int newReps = routineWorkoutList.get(i).getReps();
+                    postWorkoutItemModel(newWorkoutItem, newSets, newReps, routineID);
+                }
             }
         });
         discardBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +115,13 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 startActivity(routineActivty);
             }
         });
+
+        //new GetJsonData().execute();
+    }
+
+    private void setAdapter(ArrayList<String> aList) {
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, aList);
+        listView.setAdapter(arrayAdapter);
     }
 
     public void openEntryDialog() {
@@ -100,22 +132,110 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     @Override
     public void applyValue(String workoutItemEntryStr, int setEntry, int repEntry){
         routineList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
+        routineWorkoutList.add(new Workout(workoutItemEntryStr,setEntry,repEntry));
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
         listView.setAdapter(arrayAdapter);
     }
 
-    private void postUserModel(String workoutName, int sets, int reps){
+    private class GetJsonData extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // before making http calls
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/workout/getRoutine/" + routineID;
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                url = new URL(getUrl);
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+                StringBuffer response = new StringBuffer();
+                int responseCode = urlConnection.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK) { //success
+                    BufferedReader inurl = new BufferedReader(new InputStreamReader(
+                            urlConnection.getInputStream()));
+                    String inputLine;
+                    while ((inputLine = inurl.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    inurl.close();
+
+                } else {
+
+                    Log.i("test", "GET request not worked.");
+                }
+
+                finalresult = response.toString();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            try {
+                parseJson(finalresult);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void parseJson(String json) throws JSONException {
+
+            JSONArray jArr = new JSONArray(json);
+            String workoutItemName = "";
+            int workoutItemSets = 0;
+            int workoutItemReps = 0;
+
+            for (int count = 0; count < jArr.length(); count++) {
+                JSONObject obj = jArr.getJSONObject(count);
+                workoutItemName = obj.getString("workoutName");
+                workoutItemReps = Integer.parseInt(obj.getString("reps"));
+                workoutItemSets = Integer.parseInt(obj.getString("sets"));
+                routineWorkoutList.add(new Workout(workoutItemName, workoutItemSets, workoutItemReps));
+                routineList.add(workoutItemName + " \t \t " + workoutItemSets + " x " + workoutItemReps);
+                /*
+                if (obj.getString("workoutRoutineCreator").equals(creator)) {
+                    workoutname = obj.getString("workoutRoutineName");
+                    if (workoutname == "null") {
+                        // do nothing
+                    } else {
+                        routineNameList.add(workoutname);
+                    }
+                }*/
+
+            }
+            //setAdatper(routineList);
+        }
+    }
+
+    private void postWorkoutItemModel(String workoutName, int sets, int reps, String workoutRoutineID){
         //TODO
         //need to fix postUserModel to send workout items which are going to be attached
         //to the workoutroutine id from backend
         final Map<String, String> params = new HashMap<String, String>();
+        params.put("workoutRoutineId", workoutRoutineID );
         params.put("workoutName", workoutName);
         params.put("reps", reps + "");
         params.put("sets", sets +  ""); 
         //params.put("workoutRoutineCreator", sets);
         //params.put("workoutRoutineCreator", reps);
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Const.URL_WORKOUTROUTINE_OBJECT, new JSONObject(params),
+                Const.URL_WORKOUTITEM_ADD, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
 
                     @Override
