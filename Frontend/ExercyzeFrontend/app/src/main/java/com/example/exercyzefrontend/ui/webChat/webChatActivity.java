@@ -32,59 +32,94 @@ public class webChatActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_chat);
-        b1=(Button)findViewById(R.id.bt1);
+        //b1=(Button)findViewById(R.id.bt1);
         b2=(Button)findViewById(R.id.bt2);
-        e1=(EditText)findViewById(R.id.et1);
+       // e1=(EditText)findViewById(R.id.et1);
         e2=(EditText)findViewById(R.id.et2);
         t1=(TextView)findViewById(R.id.tx1);
 
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Draft[] drafts = {new Draft_6455()};
-
-                /**
-                 * If running this on an android device, make sure it is on the same network as your
-                 * computer, and change the ip address to that of your computer.
-                 * If running on the emulator, you can use localhost.
-                 */
-                String w = "ws://coms-309-sb-7.misc.iastate.edu:8080/websocket/"+e1.getText().toString();
-
-                try {
-                    Log.d("Socket:", "Trying socket");
-                    cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
-                        @Override
-                        public void onMessage(String message) {
-                            Log.d("", "run() returned: " + message);
-                            String s=t1.getText().toString();
-                            t1.setText(s+"\n"+message);
-                        }
-
-                        @Override
-                        public void onOpen(ServerHandshake handshake) {
-                            Log.d("OPEN", "run() returned: " + "is connecting");
-                        }
-
-                        @Override
-                        public void onClose(int code, String reason, boolean remote) {
-                            Log.d("CLOSE", "onClose() returned: " + reason);
-                        }
-
-                        @Override
-                        public void onError(Exception e)
-                        {
-                            Log.d("Exception:", e.toString());
-                        }
-                    };
+        String userNameStr = getIntent().getStringExtra("user_name");
+        Draft[] drafts = {new Draft_6455()};
+        String w = "ws://coms-309-sb-7.misc.iastate.edu:8080/websocket/"+userNameStr;
+        try {
+            Log.d("Socket:", "Trying socket");
+            cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
+                @Override
+                public void onMessage(String message) {
+                    Log.d("", "run() returned: " + message);
+                    String s=t1.getText().toString();
+                    t1.setText(s+"\n"+message);
                 }
-                catch (URISyntaxException e) {
-                    Log.d("Exception:", e.getMessage().toString());
-                    e.printStackTrace();
-                }
-                cc.connect();
 
-            }
-        });
+                @Override
+                public void onOpen(ServerHandshake handshake) {
+                    Log.d("OPEN", "run() returned: " + "is connecting");
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    Log.d("CLOSE", "onClose() returned: " + reason);
+                }
+
+                @Override
+                public void onError(Exception e)
+                {
+                    Log.d("Exception:", e.toString());
+                }
+            };
+        }
+        catch (URISyntaxException e) {
+            Log.d("Exception:", e.getMessage().toString());
+            e.printStackTrace();
+        }
+        cc.connect();
+//        b1.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Draft[] drafts = {new Draft_6455()};
+//
+//                /**
+//                 * If running this on an android device, make sure it is on the same network as your
+//                 * computer, and change the ip address to that of your computer.
+//                 * If running on the emulator, you can use localhost.
+//                 */
+//                String w = "ws://coms-309-sb-7.misc.iastate.edu:8080/websocket/"+e1.getText().toString();
+//
+//                try {
+//                    Log.d("Socket:", "Trying socket");
+//                    cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
+//                        @Override
+//                        public void onMessage(String message) {
+//                            Log.d("", "run() returned: " + message);
+//                            String s=t1.getText().toString();
+//                            t1.setText(s+"\n"+message);
+//                        }
+//
+//                        @Override
+//                        public void onOpen(ServerHandshake handshake) {
+//                            Log.d("OPEN", "run() returned: " + "is connecting");
+//                        }
+//
+//                        @Override
+//                        public void onClose(int code, String reason, boolean remote) {
+//                            Log.d("CLOSE", "onClose() returned: " + reason);
+//                        }
+//
+//                        @Override
+//                        public void onError(Exception e)
+//                        {
+//                            Log.d("Exception:", e.toString());
+//                        }
+//                    };
+//                }
+//                catch (URISyntaxException e) {
+//                    Log.d("Exception:", e.getMessage().toString());
+//                    e.printStackTrace();
+//                }
+//                cc.connect();
+//
+//            }
+//        });
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
