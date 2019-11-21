@@ -16,8 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.exercyzefrontend.R;
 import com.example.exercyzefrontend.ui.progress.UserProgressActivity;
+
 import com.example.exercyzefrontend.ui.workout.workoutActivity;
 import com.example.exercyzefrontend.ui.workoutroutine.workoutroutineActivity;
+
+import com.example.exercyzefrontend.ui.webChat.webChatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -106,7 +110,9 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.socialBtn:
-                //TO DO
+                Intent chatroom = new Intent(getApplicationContext(), webChatActivity.class);
+                chatroom.putExtra("user_name", userNameStr);
+                startActivity(chatroom);
                 break;
 
             case R.id.editFAB:

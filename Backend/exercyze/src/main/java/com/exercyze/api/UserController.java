@@ -10,7 +10,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
