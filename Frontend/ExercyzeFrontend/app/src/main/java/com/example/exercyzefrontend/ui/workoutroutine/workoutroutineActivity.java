@@ -65,6 +65,9 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         creator = getIntent().getStringExtra("user_name");
 
         routineNameList = new ArrayList<>();
+
+        //new GetJsonData().execute();
+
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
         mListView.setAdapter(arrayAdapter);
 
@@ -96,18 +99,16 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                     name = routineNameList.get(i);
                     postWorkoutRoutineModel(name, creator);
                 }
-                /*int i = 0;
-                while (i < routineNameList.size()-1) {
-                    name = routineNameList.get(i);
-                    postWorkoutRoutineModel(name, creator, i);
-                    i++;
-                }*/
             }
         });
 
 
-        //new GetJsonData().execute();
+        new GetJsonData().execute();
 
+    }
+    private void setAdatper(ArrayList<String> aList) {
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        mListView.setAdapter(arrayAdapter);
     }
 
     public void openEntryDialog() {
@@ -189,14 +190,17 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
 
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
-                workoutname = obj.getString("workoutRoutineName");
-                if (workoutname == "null") {
-                    // do nothing
-                } else {
-                    routineNameList.add(workoutname);
+                if (obj.getString("workoutRoutineCreator").equals(creator)) {
+                    workoutname = obj.getString("workoutRoutineName");
+                    if (workoutname == "null") {
+                        // do nothing
+                    } else {
+                        routineNameList.add(workoutname);
+                    }
                 }
 
             }
+            setAdatper(routineNameList);
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,5 +255,6 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         AppController.getInstance().addToRequestQueue(jsonObjReq);
 
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
