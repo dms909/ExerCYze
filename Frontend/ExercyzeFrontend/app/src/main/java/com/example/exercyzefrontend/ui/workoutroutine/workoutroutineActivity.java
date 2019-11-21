@@ -91,12 +91,17 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                 /*Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
                 startActivity(routineActivty);*/
                 String name = "";
-                int i = 0;
+
+                for (int i=0; i<routineNameList.size(); i++) {
+                    name = routineNameList.get(i);
+                    postWorkoutRoutineModel(name, creator);
+                }
+                /*int i = 0;
                 while (i < routineNameList.size()-1) {
                     name = routineNameList.get(i);
                     postWorkoutRoutineModel(name, creator, i);
                     i++;
-                }
+                }*/
             }
         });
 
@@ -206,9 +211,9 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
      *
      * @param workoutName name of new workout name to be stored in backend
      */
-    private void postWorkoutRoutineModel(String workoutName, String creator, int id) {
+    private void postWorkoutRoutineModel(String workoutName, String creator) {
         final Map<String, String> params = new HashMap<String, String>();
-        params.put("id", id+"");
+
         params.put("workoutRoutineName", workoutName);
         params.put("workoutRoutineCreator", creator);
 
