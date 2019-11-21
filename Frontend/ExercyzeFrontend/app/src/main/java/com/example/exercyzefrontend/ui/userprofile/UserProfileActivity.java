@@ -16,7 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.exercyzefrontend.R;
 import com.example.exercyzefrontend.ui.progress.UserProgressActivity;
+
+import com.example.exercyzefrontend.ui.workout.workoutActivity;
+import com.example.exercyzefrontend.ui.workoutroutine.workoutroutineActivity;
+
 import com.example.exercyzefrontend.ui.webChat.webChatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -93,7 +98,9 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.workoutBtn:
-                //TO DO
+                Intent workoutIntent = new Intent(UserProfileActivity.this, workoutroutineActivity.class);
+                workoutIntent.putExtra("user_name", userNameStr);
+                startActivity(workoutIntent);
                 break;
 
             case R.id.progressBtn:

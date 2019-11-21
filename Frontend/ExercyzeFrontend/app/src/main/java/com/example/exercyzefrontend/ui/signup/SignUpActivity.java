@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener  {
+public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     private String TAG = SignUpActivity.class.getSimpleName();
 
@@ -97,7 +97,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         weightET = findViewById(R.id.weightSignUpEditText);
         weightET.setText("0.0");
 
-        validator =  new Validator(this);
+        validator = new Validator(this);
         validator.setValidationListener(this);
 
         returnToLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +120,6 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 double weight = Double.parseDouble(weightET.getText().toString());
 
 
-
                 validator.validate();
                 if (height == 0.0) {
                     validated = false;
@@ -128,22 +127,22 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 }
                 if (weight == 0.0) {
                     validated = false;
-                    weightET.setError("Invalid height");
+                    weightET.setError("Invalid weight");
                 }
                 if (validated) {
 
-                    Toast.makeText(getApplicationContext(),"Profile successfully created!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Profile successfully created!", Toast.LENGTH_SHORT).show();
                     postUserModel(firstName, lasttName, userName, password, height, weight);
                     Intent loginActivity = new Intent(SignUpActivity.this, LoginActivity.class);
                     loginActivity.putExtra("user_Name", userName);
-                    loginActivity.putExtra("password",password);
+                    loginActivity.putExtra("password", password);
                     startActivity(loginActivity);
                 }
             }
         });
     }
 
-    private void postUserModel(String firstName, String lastName, String userName, String password, double height, double weight){
+    private void postUserModel(String firstName, String lastName, String userName, String password, double height, double weight) {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("firstName", firstName);
         params.put("lastName", lastName);
@@ -163,7 +162,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage()
-                + "Error cause: "  + error.getCause());
+                        + "Error cause: " + error.getCause());
 
             }
         }) {
