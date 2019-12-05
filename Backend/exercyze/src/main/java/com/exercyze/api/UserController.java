@@ -2,7 +2,6 @@ package com.exercyze.api;
 
 import com.exercyze.dao.UserDao;
 import com.exercyze.model.User;
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
