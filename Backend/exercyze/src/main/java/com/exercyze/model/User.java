@@ -1,9 +1,6 @@
 package com.exercyze.model;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name="user")
