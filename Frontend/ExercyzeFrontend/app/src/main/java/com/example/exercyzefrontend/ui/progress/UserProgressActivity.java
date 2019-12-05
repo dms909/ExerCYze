@@ -35,9 +35,24 @@ import java.util.Locale;
 
 public class UserProgressActivity extends AppCompatActivity implements EntryDialog.EntryDialogListener {
 
+    /**
+     * Bar Chart modifiable variable
+     */
     BarChart userWeightBC;
+
+    /**
+     *  Data set that is to be entered into the bar chart
+     */
     BarDataSet userWeightDataSet;
+
+    /**
+     * keeps track of all the entries
+     */
     ArrayList<BarEntry> userEntries;
+
+    /**
+     * will keep track of the current date when the user enters a data point to the bar chart
+     */
     ArrayList<String> datesBC;
     Calendar c;
     TextView userTitleTV;
@@ -71,12 +86,13 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         //user entries is a list that contains change of weight
         //so this is the y-axis data
         userEntries = new ArrayList<>();
-        userEntries.add(new BarEntry((150f), 0));
+        userEntries.add(new BarEntry((150f), 0)); //hard coding 150 to test bar chart
         userWeightDataSet = new BarDataSet(userEntries, "Weight (lbs)");
 
         datesBC = new ArrayList<>();
         datesBC.add(currentDate);
 
+        // Bar data to be used for the bar chart which consists of both the y-axis data and the x-axis data
         BarData userProgressData = new BarData(datesBC, userWeightDataSet);
         userWeightBC.setData(userProgressData);
         userWeightBC.setTouchEnabled(true);
@@ -87,26 +103,40 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         //new GetJsonData().execute();
     }
 
+    /**
+     * will open the entry dialog for entering a new weight value
+     */
     public void openEntryDialog() {
         EntryDialog entryDialog = new EntryDialog();
         entryDialog.show(getSupportFragmentManager(), "entry dialog");
     }
 
+    /**
+     * will apply the user entered data to the bar chart
+     * @param weightEntryVal user weight entry
+     */
     @Override
     public void applyValue(double weightEntryVal) {
         addEntryToBC(weightEntryVal, barEntryIndex);
-        barEntryIndex++;
+        //barEntryIndex++;
     }
 
+    /**
+     * helper method for generating bar chart
+     * @param weightEntry
+     * @param chartIndex
+     */
     public void addEntryToBC(double weightEntry, int chartIndex) {
+        //BarEntry(arg1, arg2) -> arg1 must be a float value
         BarEntry newEntry = new BarEntry((float) weightEntry, chartIndex);
         userWeightDataSet.addEntry(newEntry);
         c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.DATE, chartIndex);
+        c.add(Calendar.DATE, chartIndex); //made the data plus one to test
         Date currentDatePlusOne = c.getTime();
         datesBC.add(new SimpleDateFormat(("dd-MM-yyyy")).format(currentDatePlusOne));
         userWeightBC.setData(new BarData(datesBC, userWeightDataSet));
+        barEntryIndex++;
     }
 
     private class GetJsonData extends AsyncTask<Void, Void, Void> {

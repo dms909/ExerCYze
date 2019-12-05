@@ -43,9 +43,6 @@ import java.util.Objects;
 public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     private String TAG = SignUpActivity.class.getSimpleName();
-
-    private String tag_json_obj = "jobj_req";
-
     private Button signUpButton;
     private Button returnToLoginButton;
 
@@ -92,9 +89,9 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         lastNameET = findViewById(R.id.lastNameSignUpEditText);
         userNameET = findViewById(R.id.userNameSignUpEditText);
         passwordET = findViewById(R.id.passwordSignUpEditText);
-        heightET = findViewById(R.id.heightSignUpEditText);
+        heightET = findViewById(R.id.heightSignUpEditText); //preset to 0.0
         heightET.setText("0.0");
-        weightET = findViewById(R.id.weightSignUpEditText);
+        weightET = findViewById(R.id.weightSignUpEditText); //preset to 0.0
         weightET.setText("0.0");
 
         validator = new Validator(this);

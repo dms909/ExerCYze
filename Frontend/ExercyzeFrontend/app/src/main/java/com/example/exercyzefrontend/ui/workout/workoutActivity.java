@@ -45,8 +45,8 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
 
     private String TAG = workoutActivity.class.getSimpleName();
-    private String tag_json_obj = "jobj_req";
     private String finalresult;
+
     private ListView listView;
     private ArrayAdapter arrayAdapter;
     private ArrayList<String> routineList;
@@ -65,9 +65,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         routineNameStr = workoutViewItemIntent.getStringExtra("workout_name");
         routineID = workoutViewItemIntent.getStringExtra("workout_id");
 
-        System.out.println("This is the routine id " + routineID);
-
-        //ArrayList<String> routineList = new ArrayList<>();
         routineList = new ArrayList<>();
         routineWorkoutList = new ArrayList<>();
 
@@ -80,7 +77,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         final Button delItemBtn = (Button) findViewById(R.id.workoutItemDeleteBtn);
         final Button saveBtn = (Button) findViewById(R.id.saveBtn);
         final Button discardBtn = (Button) findViewById(R.id.discardBtn);
-        //final TextView routineName = (TextView) findViewById(R.id.routineName);
         final EditText routineName = (EditText) findViewById(R.id.routineNameET);
 
         routineName.setText(routineNameStr);
@@ -95,11 +91,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*String routineNameInput = routineName.getText().toString();
-                //postUserModel(workout, creator);
-                Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
-                startActivity(routineActivty);*/
-
                 for(int i=0; i<routineList.size(); i++) {
                     String newWorkoutItem = routineWorkoutList.get(i).getWorkoutItem();
                     int newSets = routineWorkoutList.get(i).getSets();
@@ -115,8 +106,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 startActivity(routineActivty);
             }
         });
-
-        //new GetJsonData().execute();
     }
 
     private void setAdapter(ArrayList<String> aList) {
@@ -208,32 +197,17 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 workoutItemSets = Integer.parseInt(obj.getString("sets"));
                 routineWorkoutList.add(new Workout(workoutItemName, workoutItemSets, workoutItemReps));
                 routineList.add(workoutItemName + " \t \t " + workoutItemSets + " x " + workoutItemReps);
-                /*
-                if (obj.getString("workoutRoutineCreator").equals(creator)) {
-                    workoutname = obj.getString("workoutRoutineName");
-                    if (workoutname == "null") {
-                        // do nothing
-                    } else {
-                        routineNameList.add(workoutname);
-                    }
-                }*/
-
             }
-            //setAdatper(routineList);
         }
     }
 
     private void postWorkoutItemModel(String workoutName, int sets, int reps, String workoutRoutineID){
-        //TODO
-        //need to fix postUserModel to send workout items which are going to be attached
-        //to the workoutroutine id from backend
         final Map<String, String> params = new HashMap<String, String>();
         params.put("workoutRoutineId", workoutRoutineID );
         params.put("workoutName", workoutName);
         params.put("reps", reps + "");
-        params.put("sets", sets +  ""); 
-        //params.put("workoutRoutineCreator", sets);
-        //params.put("workoutRoutineCreator", reps);
+        params.put("sets", sets + "");
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Const.URL_WORKOUTITEM_ADD, new JSONObject(params),
                 new Response.Listener<JSONObject>() {

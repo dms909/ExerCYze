@@ -69,8 +69,6 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         routineNameList = new ArrayList<>();
         workoutRoutineViewList = new ArrayList<>();
 
-        //new GetJsonData().execute();
-
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
         mListView.setAdapter(arrayAdapter);
 
@@ -79,7 +77,6 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String workoutViewStr = "";
                 int workoutID = 0;
-                //workoutViewStr = routineNameList.get(i);
                 workoutViewStr = workoutRoutineViewList.get(i).getWorkoutRoutineName();
                 workoutID = workoutRoutineViewList.get(i).getWorkoutRoutineID();
                 Intent workoutItemIntent = new Intent(workoutroutineActivity.this, workoutActivity.class);
@@ -98,10 +95,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         exitworkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
-                startActivity(routineActivty);*/
                 String name = "";
-
                 for (int i=0; i<routineNameList.size(); i++) {
                     name = routineNameList.get(i);
                     postWorkoutRoutineModel(name, creator);
@@ -225,6 +219,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
      * to see
      *
      * @param workoutName name of new workout name to be stored in backend
+     * @param creator name of the user who created the workout
      */
     private void postWorkoutRoutineModel(String workoutName, String creator) {
         final Map<String, String> params = new HashMap<String, String>();

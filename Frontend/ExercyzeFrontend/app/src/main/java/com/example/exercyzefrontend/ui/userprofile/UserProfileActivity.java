@@ -39,14 +39,14 @@ import java.net.URL;
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     ConstraintLayout userProfileCL;
-    Button workoutBtn, progressBtn, socialBtn, jsonBtn;
+    Button workoutBtn, progressBtn, socialBtn;
     FloatingActionButton editFAB;
     TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
     EditText userRealNameET, userHeightET, userWeightET;
-    boolean editMode;
     private Button editSaveBtn;
     private String finalresult;
     private String userNameStr = "";
+    boolean editMode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,11 +66,10 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         userHeightTV = (TextView) findViewById(R.id.userHeight);
         userWeightTV = (TextView) findViewById(R.id.userWeight);
 
-
-
         userRealNameET = (EditText) findViewById(R.id.userRealNameET);
         userHeightET = (EditText) findViewById(R.id.userHeightET);
         userWeightET = (EditText) findViewById(R.id.userWeightET);
+
         //hiding edit text while not in user edit mode
         userRealNameET.setVisibility(View.GONE);
         userHeightET.setVisibility(View.GONE);
@@ -81,7 +80,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         socialBtn = (Button) findViewById(R.id.socialBtn);
 
         editFAB = (FloatingActionButton) findViewById(R.id.editFAB);
-
 
         workoutBtn.setOnClickListener(this);
         progressBtn.setOnClickListener(this);
@@ -132,7 +130,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void editMode(boolean mode) {
-        //editMode = true;
         if (mode) {
             userRealNameTV.setVisibility(View.GONE);
             userHeightTV.setVisibility(View.GONE);
