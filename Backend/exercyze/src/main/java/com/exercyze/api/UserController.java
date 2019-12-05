@@ -2,19 +2,13 @@ package com.exercyze.api;
 
 import com.exercyze.dao.UserDao;
 import com.exercyze.model.User;
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RequestMapping("api/user")
 @RestController
