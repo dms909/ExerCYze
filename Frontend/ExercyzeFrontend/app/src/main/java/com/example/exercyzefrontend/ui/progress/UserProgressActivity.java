@@ -1,5 +1,6 @@
 package com.example.exercyzefrontend.ui.progress;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +57,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
     private ArrayList<String> datesBC;
     private Calendar c;
     private TextView userTitleTV;
-    private Button addEntryBtn;
+    private Button addEntryBtn, exitBtn;
 
     int barEntryIndex = 0;
     private String finalresult;
@@ -70,14 +71,24 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         userTitleTV = (TextView) findViewById(R.id.userTitleTV);
         userWeightBC = (BarChart) findViewById(R.id.userProgressBC);
         addEntryBtn = (Button) findViewById(R.id.addEntryBtn);
+        exitBtn = (Button) findViewById(R.id.exitBtn);
 
-        String userNameStr = getIntent().getStringExtra("user_name") + "'s Progress";
-        userTitleTV.setText(userNameStr);
+        final String userNameStr = getIntent().getStringExtra("user_name");
+        userTitleTV.setText(userNameStr+ "'s Progress");
 
         addEntryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openEntryDialog();
+            }
+        });
+
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userProfileIntent = new Intent(UserProgressActivity.this, UserProfileActivity.class);
+                userProfileIntent.putExtra("user_name", userNameStr);
+                startActivity(userProfileIntent);
             }
         });
 
