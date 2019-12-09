@@ -46,7 +46,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
     private ListView mListView;
     private ArrayAdapter arrayAdapter;
     //List<String> value = new ArrayList<>();
-    private Button addworkout, exitworkout;
+    private Button addworkout, saveBtn, exitBtn;
     private String finalresult;
     private ArrayList<String> routineNameList;
     private ArrayList<WorkoutRoutine> workoutRoutineViewList;
@@ -62,7 +62,8 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
 
         mListView = (ListView) findViewById(R.id.userRoutineList);
         addworkout = (Button) findViewById(R.id.addRoutineBtn);
-        exitworkout = (Button) findViewById(R.id.exitworkout);
+        saveBtn = (Button) findViewById(R.id.saveBtn);
+        exitBtn = (Button) findViewById(R.id.exitBtn);
 
         creator = getIntent().getStringExtra("user_name");
 
@@ -92,7 +93,8 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                 openEntryDialog();
             }
         });
-        exitworkout.setOnClickListener(new View.OnClickListener() {
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = "";
@@ -100,6 +102,15 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                     name = routineNameList.get(i);
                     postWorkoutRoutineModel(name, creator);
                 }
+            }
+        });
+
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userProfileIntent = new Intent(workoutroutineActivity.this, UserProfileActivity.class);
+                userProfileIntent.putExtra("user_name", creator);
+                startActivity(userProfileIntent);
             }
         });
 
