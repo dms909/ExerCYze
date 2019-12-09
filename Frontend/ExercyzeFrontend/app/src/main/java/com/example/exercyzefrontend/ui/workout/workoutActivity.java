@@ -72,7 +72,8 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
         new GetJsonData().execute();
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
         listView.setAdapter(arrayAdapter);
 
         final Button addItemBtn = (Button) findViewById(R.id.workoutItemAddBtn);
@@ -112,7 +113,8 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     }
 
     private void setAdapter(ArrayList<String> aList) {
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, aList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, aList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, aList);
         listView.setAdapter(arrayAdapter);
     }
 
@@ -125,7 +127,8 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     public void applyValue(String workoutItemEntryStr, int setEntry, int repEntry){
         routineList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
         routineWorkoutList.add(new Workout(workoutItemEntryStr,setEntry,repEntry));
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
         listView.setAdapter(arrayAdapter);
     }
 
