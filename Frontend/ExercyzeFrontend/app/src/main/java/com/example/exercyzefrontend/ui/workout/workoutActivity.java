@@ -45,12 +45,13 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
 
     private String TAG = workoutActivity.class.getSimpleName();
-    private String tag_json_obj = "jobj_req";
     private String finalresult;
+
     private ListView listView;
     private ArrayAdapter arrayAdapter;
     private ArrayList<String> routineList;
     private ArrayList<Workout> routineWorkoutList;
+    private String creator;
     private String routineNameStr;
     private String routineID;
 
@@ -62,25 +63,23 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         listView = findViewById(R.id.routineListView);
 
         Intent workoutViewItemIntent = getIntent();
+        creator = workoutViewItemIntent.getStringExtra("user_name");
         routineNameStr = workoutViewItemIntent.getStringExtra("workout_name");
         routineID = workoutViewItemIntent.getStringExtra("workout_id");
 
-        System.out.println("This is the routine id " + routineID);
-
-        //ArrayList<String> routineList = new ArrayList<>();
         routineList = new ArrayList<>();
         routineWorkoutList = new ArrayList<>();
 
         new GetJsonData().execute();
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
         listView.setAdapter(arrayAdapter);
 
         final Button addItemBtn = (Button) findViewById(R.id.workoutItemAddBtn);
         final Button delItemBtn = (Button) findViewById(R.id.workoutItemDeleteBtn);
         final Button saveBtn = (Button) findViewById(R.id.saveBtn);
-        final Button discardBtn = (Button) findViewById(R.id.discardBtn);
-        //final TextView routineName = (TextView) findViewById(R.id.routineName);
+        final Button exitBtn = (Button) findViewById(R.id.exitBtn);
         final EditText routineName = (EditText) findViewById(R.id.routineNameET);
 
         routineName.setText(routineNameStr);
@@ -95,11 +94,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*String routineNameInput = routineName.getText().toString();
-                //postUserModel(workout, creator);
-                Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
-                startActivity(routineActivty);*/
-
                 for(int i=0; i<routineList.size(); i++) {
                     String newWorkoutItem = routineWorkoutList.get(i).getWorkoutItem();
                     int newSets = routineWorkoutList.get(i).getSets();
@@ -108,19 +102,19 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 }
             }
         });
-        discardBtn.setOnClickListener(new View.OnClickListener() {
+        exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
+                Intent routineActivty = new Intent(workoutActivity.this, workoutroutineActivity.class);
+                routineActivty.putExtra("user_name", creator);
                 startActivity(routineActivty);
             }
         });
-
-        //new GetJsonData().execute();
     }
 
     private void setAdapter(ArrayList<String> aList) {
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, aList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, aList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, aList);
         listView.setAdapter(arrayAdapter);
     }
 
@@ -133,7 +127,8 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     public void applyValue(String workoutItemEntryStr, int setEntry, int repEntry){
         routineList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
         routineWorkoutList.add(new Workout(workoutItemEntryStr,setEntry,repEntry));
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
         listView.setAdapter(arrayAdapter);
     }
 
@@ -208,32 +203,17 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 workoutItemSets = Integer.parseInt(obj.getString("sets"));
                 routineWorkoutList.add(new Workout(workoutItemName, workoutItemSets, workoutItemReps));
                 routineList.add(workoutItemName + " \t \t " + workoutItemSets + " x " + workoutItemReps);
-                /*
-                if (obj.getString("workoutRoutineCreator").equals(creator)) {
-                    workoutname = obj.getString("workoutRoutineName");
-                    if (workoutname == "null") {
-                        // do nothing
-                    } else {
-                        routineNameList.add(workoutname);
-                    }
-                }*/
-
             }
-            //setAdatper(routineList);
         }
     }
 
     private void postWorkoutItemModel(String workoutName, int sets, int reps, String workoutRoutineID){
-        //TODO
-        //need to fix postUserModel to send workout items which are going to be attached
-        //to the workoutroutine id from backend
         final Map<String, String> params = new HashMap<String, String>();
         params.put("workoutRoutineId", workoutRoutineID );
         params.put("workoutName", workoutName);
         params.put("reps", reps + "");
-        params.put("sets", sets +  ""); 
-        //params.put("workoutRoutineCreator", sets);
-        //params.put("workoutRoutineCreator", reps);
+        params.put("sets", sets + "");
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Const.URL_WORKOUTITEM_ADD, new JSONObject(params),
                 new Response.Listener<JSONObject>() {

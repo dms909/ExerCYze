@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.exercyzefrontend.R;
 
 public class EntryDialog extends AppCompatDialogFragment {
+
     private EditText weightEntryET;
     private EntryDialogListener listener;
 
@@ -38,7 +39,7 @@ public class EntryDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Add Entry", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //String weightStr = weightEntryET.getText().toString();
+                        //on click Add Entry the program will add the user entered entry to the graph
                         double weightVal = Double.parseDouble(weightEntryET.getText().toString());
                         listener.applyValue(weightVal);
                     }

@@ -43,7 +43,6 @@ public class WorkoutEntryDialog extends AppCompatDialogFragment {
                         String workoutItem = workoutItemEntryET.getText().toString();
                         int setVal = Integer.parseInt(setEntryET.getText().toString());
                         int repVal = Integer.parseInt(repEntryET.getText().toString());
-                        double test = 0.0;
                         listener.applyValue(workoutItem, setVal, repVal);
                     }
                 });

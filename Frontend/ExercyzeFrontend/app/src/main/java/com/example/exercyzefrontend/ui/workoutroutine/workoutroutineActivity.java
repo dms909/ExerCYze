@@ -46,12 +46,12 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
     private ListView mListView;
     private ArrayAdapter arrayAdapter;
     //List<String> value = new ArrayList<>();
-    Button addworkout, exitworkout;
+    private Button addworkout, saveBtn, exitBtn;
     private String finalresult;
-    ArrayList<String> routineNameList;
-    ArrayList<WorkoutRoutine> workoutRoutineViewList;
-    String creator;
-    URL url;
+    private ArrayList<String> routineNameList;
+    private ArrayList<WorkoutRoutine> workoutRoutineViewList;
+    private String creator;
+    private URL url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +62,16 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
 
         mListView = (ListView) findViewById(R.id.userRoutineList);
         addworkout = (Button) findViewById(R.id.addRoutineBtn);
-        exitworkout = (Button) findViewById(R.id.exitworkout);
+        saveBtn = (Button) findViewById(R.id.saveBtn);
+        exitBtn = (Button) findViewById(R.id.exitBtn);
 
         creator = getIntent().getStringExtra("user_name");
 
         routineNameList = new ArrayList<>();
         workoutRoutineViewList = new ArrayList<>();
 
-        //new GetJsonData().execute();
-
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineNameList);
         mListView.setAdapter(arrayAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,10 +79,10 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String workoutViewStr = "";
                 int workoutID = 0;
-                //workoutViewStr = routineNameList.get(i);
                 workoutViewStr = workoutRoutineViewList.get(i).getWorkoutRoutineName();
                 workoutID = workoutRoutineViewList.get(i).getWorkoutRoutineID();
                 Intent workoutItemIntent = new Intent(workoutroutineActivity.this, workoutActivity.class);
+                workoutItemIntent.putExtra("user_name", creator);
                 workoutItemIntent.putExtra("workout_name", workoutViewStr);
                 workoutItemIntent.putExtra("workout_id", workoutID+"");
                 startActivity(workoutItemIntent);
@@ -95,13 +95,11 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                 openEntryDialog();
             }
         });
-        exitworkout.setOnClickListener(new View.OnClickListener() {
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
-                startActivity(routineActivty);*/
                 String name = "";
-
                 for (int i=0; i<routineNameList.size(); i++) {
                     name = routineNameList.get(i);
                     postWorkoutRoutineModel(name, creator);
@@ -109,12 +107,22 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
             }
         });
 
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userProfileIntent = new Intent(workoutroutineActivity.this, UserProfileActivity.class);
+                userProfileIntent.putExtra("user_name", creator);
+                startActivity(userProfileIntent);
+            }
+        });
+
 
         new GetJsonData().execute();
 
     }
-    private void setAdatper(ArrayList<String> aList) {
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+    private void setAdapter(ArrayList<String> aList) {
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineNameList);
         mListView.setAdapter(arrayAdapter);
     }
 
@@ -126,7 +134,8 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
     @Override
     public void applyValue(String workoutNameEntryStr) {
         routineNameList.add(workoutNameEntryStr);
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineNameList);
         mListView.setAdapter(arrayAdapter);
     }
 
@@ -211,7 +220,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                 }
 
             }
-            setAdatper(routineNameList);
+            setAdapter(routineNameList);
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -225,6 +234,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
      * to see
      *
      * @param workoutName name of new workout name to be stored in backend
+     * @param creator name of the user who created the workout
      */
     private void postWorkoutRoutineModel(String workoutName, String creator) {
         final Map<String, String> params = new HashMap<String, String>();

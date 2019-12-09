@@ -38,15 +38,15 @@ import java.net.URL;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ConstraintLayout userProfileCL;
-    Button workoutBtn, progressBtn, socialBtn, jsonBtn;
-    FloatingActionButton editFAB;
-    TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
-    EditText userRealNameET, userHeightET, userWeightET;
-    boolean editMode;
+    private ConstraintLayout userProfileCL;
+    private Button workoutBtn, progressBtn, socialBtn;
+    private FloatingActionButton editFAB;
+    private TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
+    private EditText userRealNameET, userHeightET, userWeightET;
     private Button editSaveBtn;
     private String finalresult;
     private String userNameStr = "";
+    private boolean editMode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,11 +66,10 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         userHeightTV = (TextView) findViewById(R.id.userHeight);
         userWeightTV = (TextView) findViewById(R.id.userWeight);
 
-
-
         userRealNameET = (EditText) findViewById(R.id.userRealNameET);
         userHeightET = (EditText) findViewById(R.id.userHeightET);
         userWeightET = (EditText) findViewById(R.id.userWeightET);
+
         //hiding edit text while not in user edit mode
         userRealNameET.setVisibility(View.GONE);
         userHeightET.setVisibility(View.GONE);
@@ -81,7 +80,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         socialBtn = (Button) findViewById(R.id.socialBtn);
 
         editFAB = (FloatingActionButton) findViewById(R.id.editFAB);
-
 
         workoutBtn.setOnClickListener(this);
         progressBtn.setOnClickListener(this);
@@ -131,8 +129,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    public void editMode(boolean mode) {
-        //editMode = true;
+    private void editMode(boolean mode) {
         if (mode) {
             userRealNameTV.setVisibility(View.GONE);
             userHeightTV.setVisibility(View.GONE);
@@ -217,7 +214,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             }
         }
 
-        public void parseJson(String json) throws JSONException {
+        private void parseJson(String json) throws JSONException {
 
             JSONArray jArr = new JSONArray(json);
             String realName = "";
