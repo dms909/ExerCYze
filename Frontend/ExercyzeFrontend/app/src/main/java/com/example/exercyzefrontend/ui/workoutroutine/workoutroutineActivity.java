@@ -70,7 +70,8 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         routineNameList = new ArrayList<>();
         workoutRoutineViewList = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineNameList);
         mListView.setAdapter(arrayAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,8 +120,9 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         new GetJsonData().execute();
 
     }
-    private void setAdatper(ArrayList<String> aList) {
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+    private void setAdapter(ArrayList<String> aList) {
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineNameList);
         mListView.setAdapter(arrayAdapter);
     }
 
@@ -132,7 +134,8 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
     @Override
     public void applyValue(String workoutNameEntryStr) {
         routineNameList.add(workoutNameEntryStr);
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineNameList);
         mListView.setAdapter(arrayAdapter);
     }
 
@@ -217,7 +220,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                 }
 
             }
-            setAdatper(routineNameList);
+            setAdapter(routineNameList);
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
