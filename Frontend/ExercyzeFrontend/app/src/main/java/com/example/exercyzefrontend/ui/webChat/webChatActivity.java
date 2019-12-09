@@ -1,5 +1,6 @@
 package com.example.exercyzefrontend.ui.webChat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exercyzefrontend.R;
+import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft;
@@ -22,7 +24,7 @@ import java.net.URISyntaxException;
 
 public class webChatActivity extends AppCompatActivity {
 
-    Button  sendBtn;
+    Button  sendBtn, backBtn;
     EditText message;
     TextView chatroom;
 
@@ -33,9 +35,9 @@ public class webChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_chat);
         sendBtn =(Button)findViewById(R.id.sendBtn);
+        backBtn =(Button)findViewById(R.id.backBtn);
         message =(EditText)findViewById(R.id.messageinput);
         chatroom =(TextView)findViewById(R.id.chatroom);
-
         String userNameStr = getIntent().getStringExtra("user_name");
         Draft[] drafts = {new Draft_6455()};
         String w = "ws://coms-309-sb-7.misc.iastate.edu:8080/websocket/"+userNameStr;
@@ -84,5 +86,7 @@ public class webChatActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
+
 }

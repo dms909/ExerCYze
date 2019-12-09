@@ -8,6 +8,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * Class that handles with sending/receiving data request sent to web server
+ */
 public class AppController extends Application {
 
     public static final String TAG = AppController.class

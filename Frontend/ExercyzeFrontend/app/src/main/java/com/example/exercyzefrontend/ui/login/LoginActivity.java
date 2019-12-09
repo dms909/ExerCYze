@@ -48,6 +48,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * class that handles with the login page.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
@@ -117,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // watches for change in text fields, if not touched then is ingored, after the text field is changes then login view model will get data of username and passwords
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -148,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // sending request to the url server on username and passwords to authenticate if user is in database to login in
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         }, new Response.ErrorListener() {
+                    // outputting different error messages is request did not work
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (error instanceof TimeoutError) {
@@ -199,6 +205,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // if user clicks register button on login page then moving to register page event
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -209,6 +216,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    // method that handles with when successful login in to profile page will greet with user's username
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
 
@@ -221,6 +229,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
+    // method to show if login progress was a fail to the user
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }

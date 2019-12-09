@@ -11,6 +11,9 @@ import com.example.exercyzefrontend.data.Result;
 import com.example.exercyzefrontend.data.model.LoggedInUser;
 import com.example.exercyzefrontend.R;
 
+/**
+ * class that handles with validation progress on the login in page fields
+ */
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
