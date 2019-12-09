@@ -51,6 +51,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     private ArrayAdapter arrayAdapter;
     private ArrayList<String> routineList;
     private ArrayList<Workout> routineWorkoutList;
+    private String creator;
     private String routineNameStr;
     private String routineID;
 
@@ -62,6 +63,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         listView = findViewById(R.id.routineListView);
 
         Intent workoutViewItemIntent = getIntent();
+        creator = workoutViewItemIntent.getStringExtra("user_name");
         routineNameStr = workoutViewItemIntent.getStringExtra("workout_name");
         routineID = workoutViewItemIntent.getStringExtra("workout_id");
 
@@ -76,7 +78,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         final Button addItemBtn = (Button) findViewById(R.id.workoutItemAddBtn);
         final Button delItemBtn = (Button) findViewById(R.id.workoutItemDeleteBtn);
         final Button saveBtn = (Button) findViewById(R.id.saveBtn);
-        final Button discardBtn = (Button) findViewById(R.id.discardBtn);
+        final Button exitBtn = (Button) findViewById(R.id.exitBtn);
         final EditText routineName = (EditText) findViewById(R.id.routineNameET);
 
         routineName.setText(routineNameStr);
@@ -99,10 +101,11 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 }
             }
         });
-        discardBtn.setOnClickListener(new View.OnClickListener() {
+        exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent routineActivty = new Intent(getApplicationContext(), workoutroutineActivity.class);
+                Intent routineActivty = new Intent(workoutActivity.this, workoutroutineActivity.class);
+                routineActivty.putExtra("user_name", creator);
                 startActivity(routineActivty);
             }
         });

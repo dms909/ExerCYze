@@ -81,6 +81,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                 workoutViewStr = workoutRoutineViewList.get(i).getWorkoutRoutineName();
                 workoutID = workoutRoutineViewList.get(i).getWorkoutRoutineID();
                 Intent workoutItemIntent = new Intent(workoutroutineActivity.this, workoutActivity.class);
+                workoutItemIntent.putExtra("user_name", creator);
                 workoutItemIntent.putExtra("workout_name", workoutViewStr);
                 workoutItemIntent.putExtra("workout_id", workoutID+"");
                 startActivity(workoutItemIntent);
