@@ -46,12 +46,12 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
     private ListView mListView;
     private ArrayAdapter arrayAdapter;
     //List<String> value = new ArrayList<>();
-    Button addworkout, exitworkout;
+    private Button addworkout, exitworkout;
     private String finalresult;
-    ArrayList<String> routineNameList;
-    ArrayList<WorkoutRoutine> workoutRoutineViewList;
-    String creator;
-    URL url;
+    private ArrayList<String> routineNameList;
+    private ArrayList<WorkoutRoutine> workoutRoutineViewList;
+    private String creator;
+    private URL url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

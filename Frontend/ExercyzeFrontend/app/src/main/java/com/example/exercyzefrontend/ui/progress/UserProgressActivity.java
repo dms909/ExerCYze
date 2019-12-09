@@ -43,20 +43,20 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
     /**
      *  Data set that is to be entered into the bar chart
      */
-    BarDataSet userWeightDataSet;
+    private BarDataSet userWeightDataSet;
 
     /**
      * keeps track of all the entries
      */
-    ArrayList<BarEntry> userEntries;
+    private ArrayList<BarEntry> userEntries;
 
     /**
      * will keep track of the current date when the user enters a data point to the bar chart
      */
-    ArrayList<String> datesBC;
-    Calendar c;
-    TextView userTitleTV;
-    Button addEntryBtn;
+    private ArrayList<String> datesBC;
+    private Calendar c;
+    private TextView userTitleTV;
+    private Button addEntryBtn;
 
     int barEntryIndex = 0;
     private String finalresult;
@@ -106,7 +106,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
     /**
      * will open the entry dialog for entering a new weight value
      */
-    public void openEntryDialog() {
+    private void openEntryDialog() {
         EntryDialog entryDialog = new EntryDialog();
         entryDialog.show(getSupportFragmentManager(), "entry dialog");
     }
@@ -126,7 +126,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
      * @param weightEntry
      * @param chartIndex
      */
-    public void addEntryToBC(double weightEntry, int chartIndex) {
+    private void addEntryToBC(double weightEntry, int chartIndex) {
         //BarEntry(arg1, arg2) -> arg1 must be a float value
         BarEntry newEntry = new BarEntry((float) weightEntry, chartIndex);
         userWeightDataSet.addEntry(newEntry);
@@ -198,7 +198,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
             }
         }
 
-        public void parseJson(String json) throws JSONException {
+        private void parseJson(String json) throws JSONException {
 
             JSONArray jArr = new JSONArray(json);
             String realName = "";

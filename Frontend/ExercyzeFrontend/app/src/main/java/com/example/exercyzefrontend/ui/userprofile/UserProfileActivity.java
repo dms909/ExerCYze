@@ -38,15 +38,15 @@ import java.net.URL;
 
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ConstraintLayout userProfileCL;
-    Button workoutBtn, progressBtn, socialBtn;
-    FloatingActionButton editFAB;
-    TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
-    EditText userRealNameET, userHeightET, userWeightET;
+    private ConstraintLayout userProfileCL;
+    private Button workoutBtn, progressBtn, socialBtn;
+    private FloatingActionButton editFAB;
+    private TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
+    private EditText userRealNameET, userHeightET, userWeightET;
     private Button editSaveBtn;
     private String finalresult;
     private String userNameStr = "";
-    boolean editMode;
+    private boolean editMode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,7 +129,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    public void editMode(boolean mode) {
+    private void editMode(boolean mode) {
         if (mode) {
             userRealNameTV.setVisibility(View.GONE);
             userHeightTV.setVisibility(View.GONE);
@@ -214,7 +214,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             }
         }
 
-        public void parseJson(String json) throws JSONException {
+        private void parseJson(String json) throws JSONException {
 
             JSONArray jArr = new JSONArray(json);
             String realName = "";
