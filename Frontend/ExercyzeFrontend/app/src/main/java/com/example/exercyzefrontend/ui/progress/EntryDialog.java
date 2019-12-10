@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.exercyzefrontend.R;
 
+/**
+ * class that handles with ui of the entry dialog
+ */
 public class EntryDialog extends AppCompatDialogFragment {
 
     private EditText weightEntryET;
@@ -60,6 +63,7 @@ public class EntryDialog extends AppCompatDialogFragment {
         }
     }
 
+    // userProgressActivty will implement this interface to apply values of weight
     public interface EntryDialogListener {
         void applyValue(double weightEntryStr);
         //add weight entry here

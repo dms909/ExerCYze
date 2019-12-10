@@ -34,6 +34,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * class that handles with ui of the progress page
+ */
 public class UserProgressActivity extends AppCompatActivity implements EntryDialog.EntryDialogListener {
 
     /**
@@ -76,6 +79,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         final String userNameStr = getIntent().getStringExtra("user_name");
         userTitleTV.setText(userNameStr+ "'s Progress");
 
+        // if add entry button is pressed then opens dialog method
         addEntryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +87,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
             }
         });
 
+        // if button to go back is pressed then starts up the user profile page or home user screen
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +155,9 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         barEntryIndex++;
     }
 
+    /**
+     * class to handle with in the background with getting data from the url users from server
+     */
     private class GetJsonData extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -209,6 +217,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
             }
         }
 
+        // methos that parses json to return message with username data in message
         private void parseJson(String json) throws JSONException {
 
             JSONArray jArr = new JSONArray(json);
