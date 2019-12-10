@@ -10,8 +10,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.exercyzefrontend.R;
+import com.example.exercyzefrontend.app.AppController;
 import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
+import com.example.exercyzefrontend.utils.Const;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -28,17 +36,21 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * class that handles with ui of the progress page
  */
 public class UserProgressActivity extends AppCompatActivity implements EntryDialog.EntryDialogListener {
 
+    private String TAG = UserProfileActivity.class.getSimpleName();
     /**
      * Bar Chart modifiable variable
      */
@@ -61,8 +73,8 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
     private Calendar c;
     private TextView userTitleTV;
     private Button addEntryBtn, exitBtn;
-
-    int barEntryIndex = 0;
+    private String userID;
+    private int barEntryIndex = 0;
     private String finalresult;
 
 
@@ -77,6 +89,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         exitBtn = (Button) findViewById(R.id.exitBtn);
 
         final String userNameStr = getIntent().getStringExtra("user_name");
+        userID = getIntent().getStringExtra("user_ID");
         userTitleTV.setText(userNameStr+ "'s Progress");
 
         // if add entry button is pressed then opens dialog method
@@ -102,11 +115,11 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         //user entries is a list that contains change of weight
         //so this is the y-axis data
         userEntries = new ArrayList<>();
-        userEntries.add(new BarEntry((150f), 0)); //hard coding 150 to test bar chart
+        //userEntries.add(new BarEntry((150f), 0)); //hard coding 150 to test bar chart
         userWeightDataSet = new BarDataSet(userEntries, "Weight (lbs)");
 
         datesBC = new ArrayList<>();
-        datesBC.add(currentDate);
+        //datesBC.add(currentDate);
 
         // Bar data to be used for the bar chart which consists of both the y-axis data and the x-axis data
         BarData userProgressData = new BarData(datesBC, userWeightDataSet);
@@ -114,9 +127,9 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         userWeightBC.setTouchEnabled(true);
         userWeightBC.setDragEnabled(true);
         userWeightBC.setScaleEnabled(true);
-        barEntryIndex++;
+        //barEntryIndex++;
 
-        //new GetJsonData().execute();
+        new GetJsonData().execute();
     }
 
     /**
@@ -133,7 +146,12 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
      */
     @Override
     public void applyValue(double weightEntryVal) {
-        addEntryToBC(weightEntryVal, barEntryIndex);
+        c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DATE, 0); //date is now added as current date
+        Date currentDate = c.getTime();
+        addEntryToBC(weightEntryVal, currentDate, barEntryIndex);
+        postUserProgressModel(userID, (int) weightEntryVal, currentDate);
         //barEntryIndex++;
     }
 
@@ -142,18 +160,21 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
      * @param weightEntry
      * @param chartIndex
      */
-    private void addEntryToBC(double weightEntry, int chartIndex) {
+    private void addEntryToBC(double weightEntry, Date dateEntry, int chartIndex) {
         //BarEntry(arg1, arg2) -> arg1 must be a float value
         BarEntry newEntry = new BarEntry((float) weightEntry, chartIndex);
         userWeightDataSet.addEntry(newEntry);
-        c = Calendar.getInstance();
+        /*c = Calendar.getInstance();
         c.setTime(new Date());
-        c.add(Calendar.DATE, chartIndex); //made the data plus one to test
-        Date currentDatePlusOne = c.getTime();
-        datesBC.add(new SimpleDateFormat(("dd-MM-yyyy")).format(currentDatePlusOne));
+        c.add(Calendar.DATE, 0); //date is now added as current date
+        Date currentDate = c.getTime();*/
+        datesBC.add(new SimpleDateFormat(("dd-MM-yyyy")).format(dateEntry));
         userWeightBC.setData(new BarData(datesBC, userWeightDataSet));
+        //barEntryIndex++;
         barEntryIndex++;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * class to handle with in the background with getting data from the url users from server
@@ -170,7 +191,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         protected Void doInBackground(Void... arg0) {
 
 
-            String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/user";
+            String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/user-progress/" + userID;
             try {
                 URL url;
                 HttpURLConnection urlConnection = null;
@@ -222,14 +243,82 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
 
             JSONArray jArr = new JSONArray(json);
             String realName = "";
-
+            String weightStr = "";
+            String dateStr = "";
+            Date dateEntry;
+            int indexBC = 0;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
-                String uName = obj.getString("userName") + "'s Progress";
-                userTitleTV.setText(uName);
+                if(obj.getString("user_id").equals(userID)) {
+                    weightStr = obj.getString("new_weight");
+                    dateStr = obj.getString("date_entered");
+                    try {
+                        dateEntry = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(dateStr);
+                        addEntryToBC(Double.parseDouble(weightStr), dateEntry, indexBC);
+                        System.out.println(dateEntry);
+                        System.out.println(dateEntry);
+                        System.out.println(dateEntry);
+                        System.out.println(dateEntry);
 
+                    } catch(ParseException e) {
+                        e.printStackTrace();
+                    }
+                    indexBC++;
+                        //addEntryToBC();
+                    //String uName = obj.getString("userName") + "'s Progress";
+                    //userTitleTV.setText(uName);
+
+                }
             }
         }
 
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private void postUserProgressModel(String userID, int newWeight, Date newDate) {
+        final Map<String, String> params = new HashMap<String, String>();
+
+        params.put("user_id", userID);
+        params.put("new_weight", newWeight + "");
+        params.put("date_entered", newDate + "");
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                Const.URL_NEW_PROGRESS_ENTRY, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("error: " + error.getMessage());
+                VolleyLog.d(TAG, "Error: " + error.getMessage()
+                        + "Error cause: " + error.getCause());
+                error.printStackTrace();
+
+            }
+        }) {
+
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+        };
+        System.out.println(jsonObjReq);
+        System.out.println(jsonObjReq);
+        System.out.println(jsonObjReq);
+        System.out.println(jsonObjReq);
+        System.out.println(jsonObjReq);
+
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 }

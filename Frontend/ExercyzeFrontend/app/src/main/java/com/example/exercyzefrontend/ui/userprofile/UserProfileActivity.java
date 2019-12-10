@@ -47,6 +47,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     private String finalresult;
     private String userNameStr = "";
     private boolean editMode;
+    private int userID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             case R.id.progressBtn:
                 Intent userProgressIntent = new Intent(getApplicationContext(), UserProgressActivity.class);
                 userProgressIntent.putExtra("user_name", userNameStr);
+                userProgressIntent.putExtra("user_ID", userID +"");
                 startActivity(userProgressIntent);
                 break;
 
@@ -222,6 +224,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 if (obj.getString("userName").equals(userNameStr)) {
+                    userID = count;
                     userNameTV.setText(userNameStr);
                     realName = obj.getString("firstName") + " " + obj.getString("lastName");
                     userRealNameTV.setText(realName);
