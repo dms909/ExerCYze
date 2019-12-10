@@ -26,8 +26,8 @@ public class UserProgressController {
         return db.findAll();
     }
 
-    @GetMapping
-    public List<UserProgress> getAllUserProgressEntryById(int userId){
+    @GetMapping(path = "{id}")
+    public List<UserProgress> getAllUserProgressEntryById(@PathVariable int userId){
         return db.findAllByUserId(userId);
     }
 }

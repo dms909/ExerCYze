@@ -1,10 +1,12 @@
 package com.exercyze.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="user_workout")
+@Table(name="user_progress")
 public class UserProgress {
 
     @Id
@@ -19,6 +21,7 @@ public class UserProgress {
     private int newWeight;
 
     @Column(name = "date_entered")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date dateEntered;
 
     public UserProgress(int userId, int newWeight, Date dateEntered) {
