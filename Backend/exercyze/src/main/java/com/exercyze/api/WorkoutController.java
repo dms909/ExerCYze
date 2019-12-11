@@ -19,7 +19,7 @@ public class WorkoutController {
      * @param workout
      */
     @PostMapping(path="addWorkout")
-    private void addWorkoutToRoutine(@RequestBody Workout workout){
+    public void addWorkoutToRoutine(@RequestBody Workout workout){
         db.save(workout);
     }
 
@@ -29,7 +29,7 @@ public class WorkoutController {
      * @return a list of workouts with the same routine id
      */
     @GetMapping(path="getRoutine/{id}")
-    private List<Workout> getWorkoutsByRoutineId(@PathVariable int id){
+    public List<Workout> getWorkoutsByRoutineId(@PathVariable int id){
         return db.findAllByWorkoutRoutineId(id);
     }
 

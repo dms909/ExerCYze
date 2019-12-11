@@ -23,7 +23,7 @@ public class WorkoutRoutineController {
      * @param workoutRoutine
      */
     @PostMapping
-    private void addWorkoutRoutine(@Valid @NonNull @RequestBody WorkoutRoutine workoutRoutine){
+    public void addWorkoutRoutine(@Valid @NonNull @RequestBody WorkoutRoutine workoutRoutine){
         routineDao.save(workoutRoutine);
     }
 
@@ -33,7 +33,7 @@ public class WorkoutRoutineController {
      * @return workoutRoutine found by it's id
      */
     @GetMapping(path = "{id}")
-    private WorkoutRoutine getWorkoutRoutineById(@PathVariable Integer id){
+    public WorkoutRoutine getWorkoutRoutineById(@PathVariable Integer id){
         WorkoutRoutine toReturn =  routineDao.findWorkoutRoutineById(id);
         return toReturn;
     }
@@ -43,7 +43,7 @@ public class WorkoutRoutineController {
      * @return all workout routines in database
      */
     @GetMapping
-    private List<WorkoutRoutine> getAllWorkoutRoutine(){
+    public List<WorkoutRoutine> getAllWorkoutRoutine(){
         return routineDao.findAll();
     }
 
@@ -52,7 +52,7 @@ public class WorkoutRoutineController {
      * @param id
      */
    @DeleteMapping(path="{id}")
-    private void deleteWorkoutRoutineById(@PathVariable Integer id){
+    public void deleteWorkoutRoutineById(@PathVariable Integer id){
         routineDao.deleteById(id);
    }
 }

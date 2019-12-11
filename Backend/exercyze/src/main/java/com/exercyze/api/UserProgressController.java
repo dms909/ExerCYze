@@ -21,7 +21,7 @@ public class UserProgressController {
      * @param userProgress
      */
     @PostMapping
-    private void addUserProgressEntry(@Valid @NonNull @RequestBody UserProgress userProgress){
+    public void addUserProgressEntry(@Valid @NonNull @RequestBody UserProgress userProgress){
         db.save(userProgress);
     }
 
@@ -30,7 +30,7 @@ public class UserProgressController {
      * @return list of all user progress entries createds
      */
     @GetMapping
-    private List<UserProgress> getAllUserProgressEntry(){
+    public List<UserProgress> getAllUserProgressEntry(){
         return db.findAll();
     }
 
@@ -40,7 +40,7 @@ public class UserProgressController {
      * @return
      */
     @GetMapping(path = "{id}")
-    private List<UserProgress> getAllUserProgressEntryById(@PathVariable int userId){
+    public List<UserProgress> getAllUserProgressEntryById(@PathVariable int userId){
         return db.findAllByUserId(userId);
     }
 }

@@ -22,7 +22,7 @@ public class UserController {
      * @param user
      */
     @PostMapping
-    private void addUser(@Valid @NonNull @RequestBody User user){
+    public void addUser(@Valid @NonNull @RequestBody User user){
         if(getUserByUserName(user.getUserName()) == null){
             db.save(user);
             return;
@@ -34,7 +34,7 @@ public class UserController {
      * @return list of all users in the database
      */
     @GetMapping
-    private List<User> getAllUser(){
+    public List<User> getAllUser(){
         return db.findAll();
     }
 
@@ -44,7 +44,7 @@ public class UserController {
      * @return found user
      */
     @GetMapping(path = "{id}")
-    private User getUserById(@PathVariable Integer id){
+    public User getUserById(@PathVariable Integer id){
         return db.findUserById(id);
     }
 
@@ -54,7 +54,7 @@ public class UserController {
      * @return found user
      */
     @GetMapping(path = "userName")
-    private User getUserByUserName(@RequestParam("userName") String userName){
+    public User getUserByUserName(@RequestParam("userName") String userName){
         return db.findByUserName(userName);
     }
 
@@ -63,7 +63,7 @@ public class UserController {
      * @param id
      */
     @DeleteMapping(path="{id}")
-    private void deleteUserById(@PathVariable("id") Integer id){
+    public void deleteUserById(@PathVariable("id") Integer id){
         db.deleteById(id);
     }
 
@@ -74,7 +74,7 @@ public class UserController {
      * @return
      */
     @PostMapping(path="authenticate")
-    private @ResponseBody String authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
+    public @ResponseBody String authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
         JSONObject jsonObject = null;
 
         //Check if a user used a valid username and password. If they have, they will receive a valid login
