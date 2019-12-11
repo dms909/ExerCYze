@@ -41,15 +41,60 @@ import java.net.URL;
  */
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * variable for the layout is used to switch profile page to edit mode
+     */
     private ConstraintLayout userProfileCL;
+
+    /**
+     *      workoutBtn:
+     *         Button for switching the user's view to their workout page
+     *      progressBtn:
+     *         Button for switching the user's view to their progress page
+     *      socialBtn:
+     *         Button for switching the user's view to a chat room
+     */
     private Button workoutBtn, progressBtn, socialBtn;
+
+    /**
+     *  Button for switching the user's profile view to edit mode when clicked
+     */
     private FloatingActionButton editFAB;
+
+    /**
+     *  Text views for displaying username, real name, height and weight on the profile page
+     */
     private TextView userNameTV, userRealNameTV, userHeightTV, userWeightTV;
+
+    /**
+     *  Edit text for when the user would like to change the values on their profile page
+     */
     private EditText userRealNameET, userHeightET, userWeightET;
+
+    /**
+     *  Button for when the user would want to save their profile changes
+     */
     private Button editSaveBtn;
+
+    /**
+     *  String variable used in get json method
+     */
     private String finalresult;
+
+    /**
+     * variable to hold user name string inputted from logging into the app
+     */
     private String userNameStr = "";
+
+    /**
+     *  Boolean variable to tell the app when the edit view should be on or off
+     */
     private boolean editMode;
+
+    /**
+     *  variable for holding the user ID when the profile is first created so backend properties can be applied
+     */
+    private int userID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,8 +105,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         Intent profileIntent = getIntent();
         userNameStr = profileIntent.getStringExtra("user_name");
-        //variable for constraint layout
-        //used when entering edit mode
+
         userProfileCL = findViewById(R.id.userProfileCL);
 
         userNameTV = (TextView) findViewById(R.id.user_Name);
@@ -87,7 +131,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         workoutBtn.setOnClickListener(this);
         progressBtn.setOnClickListener(this);
         socialBtn.setOnClickListener(this);
-
         editFAB.setOnClickListener(this);
 
         //class for getting and parsing Json data
@@ -98,24 +141,26 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //go to workout page
             case R.id.workoutBtn:
                 Intent workoutIntent = new Intent(UserProfileActivity.this, workoutroutineActivity.class);
                 workoutIntent.putExtra("user_name", userNameStr);
                 startActivity(workoutIntent);
                 break;
-
+            //go to progress page
             case R.id.progressBtn:
                 Intent userProgressIntent = new Intent(getApplicationContext(), UserProgressActivity.class);
                 userProgressIntent.putExtra("user_name", userNameStr);
+                userProgressIntent.putExtra("user_ID", userID +"");
                 startActivity(userProgressIntent);
                 break;
-
+            //go to chat room
             case R.id.socialBtn:
                 Intent chatroom = new Intent(getApplicationContext(), webChatActivity.class);
                 chatroom.putExtra("user_name", userNameStr);
                 startActivity(chatroom);
                 break;
-
+            //enter edit mode
             case R.id.editFAB:
                 //TO DO
                 editMode(true);
@@ -168,14 +213,11 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         protected void onPreExecute() {
             super.onPreExecute();
             // before making http calls
-
         }
 
         // background activity connection request to url server
         @Override
         protected Void doInBackground(Void... arg0) {
-
-
             String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/user";
             try {
                 URL url;
@@ -197,9 +239,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                         response.append(inputLine);
                     }
                     inurl.close();
-
                 } else {
-
                     Log.i("test", "POST request not worked.");
                 }
 
@@ -233,6 +273,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
                 if (obj.getString("userName").equals(userNameStr)) {
+                    userID = count;
                     userNameTV.setText(userNameStr);
                     realName = obj.getString("firstName") + " " + obj.getString("lastName");
                     userRealNameTV.setText(realName);

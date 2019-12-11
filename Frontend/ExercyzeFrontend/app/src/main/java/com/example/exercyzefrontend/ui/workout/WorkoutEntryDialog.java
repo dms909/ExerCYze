@@ -66,6 +66,5 @@ public class WorkoutEntryDialog extends AppCompatDialogFragment {
 
     public interface WorkoutEntryDialogListener {
         void applyValue(String workoutItemEntryStr, int setEntry, int repEntry);
-        //add weight entry her
     }
 }
