@@ -54,10 +54,10 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
     /**
      * Bar Chart modifiable variable
      */
-    BarChart userWeightBC;
+    private BarChart userWeightBC;
 
     /**
-     *  Data set that is to be entered into the bar chart
+     * Data set that is to be entered into the bar chart
      */
     private BarDataSet userWeightDataSet;
 
@@ -70,11 +70,38 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
      * will keep track of the current date when the user enters a data point to the bar chart
      */
     private ArrayList<String> datesBC;
+
+    /**
+     * calendar variable to input a date from the calendar year
+     */
     private Calendar c;
+
+    /**
+     * text view for the title of the user progress page
+     */
     private TextView userTitleTV;
+
+    /**
+     * addEntryBtn:
+     * button that will call a dialog menu where the user will input a weight for a new date
+     * exitBtn:
+     * button for when the user would like to return to the user profile page
+     */
     private Button addEntryBtn, exitBtn;
+
+    /**
+     * this string variable is used for the backend to identify which user's progress the app will be looking at
+     */
     private String userID;
+
+    /**
+     * this variable will keep track of the total amount of bar chart entries
+     */
     private int barEntryIndex = 0;
+
+    /**
+     * final result used within the get json object
+     */
     private String finalresult;
 
 
@@ -90,7 +117,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
 
         final String userNameStr = getIntent().getStringExtra("user_name");
         userID = getIntent().getStringExtra("user_ID");
-        userTitleTV.setText(userNameStr+ "'s Progress");
+        userTitleTV.setText(userNameStr + "'s Progress");
 
         // if add entry button is pressed then opens dialog method
         addEntryBtn.setOnClickListener(new View.OnClickListener() {
@@ -110,24 +137,14 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
             }
         });
 
-        String currentDate = new SimpleDateFormat(("dd-MM-yyyy"), Locale.getDefault()).format(new Date());
-
-        //user entries is a list that contains change of weight
-        //so this is the y-axis data
-        userEntries = new ArrayList<>();
-        //userEntries.add(new BarEntry((150f), 0)); //hard coding 150 to test bar chart
+        //user entries is a list that contains user entered weight
+        userEntries = new ArrayList<>(); // -> y-axis data
         userWeightDataSet = new BarDataSet(userEntries, "Weight (lbs)");
-
-        datesBC = new ArrayList<>();
-        //datesBC.add(currentDate);
-
-        // Bar data to be used for the bar chart which consists of both the y-axis data and the x-axis data
-        BarData userProgressData = new BarData(datesBC, userWeightDataSet);
-        userWeightBC.setData(userProgressData);
+        datesBC = new ArrayList<>(); // -> x-axis data
+        userWeightBC.setData(new BarData(datesBC, userWeightDataSet)); // bar chart is initialized here
         userWeightBC.setTouchEnabled(true);
         userWeightBC.setDragEnabled(true);
         userWeightBC.setScaleEnabled(true);
-        //barEntryIndex++;
 
         new GetJsonData().execute();
     }
@@ -141,7 +158,8 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
     }
 
     /**
-     * will apply the user entered data to the bar chart
+     * will apply the user entered data from the entry dialog to the bar chart
+     *
      * @param weightEntryVal user weight entry
      */
     @Override
@@ -151,12 +169,13 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         c.add(Calendar.DATE, 0); //date is now added as current date
         Date currentDate = c.getTime();
         addEntryToBC(weightEntryVal, currentDate, barEntryIndex);
-        postUserProgressModel(userID, (int) weightEntryVal, currentDate);
-        //barEntryIndex++;
+        int weightInt = (int) weightEntryVal;
+        postUserProgressModel(userID, weightInt + "", new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(currentDate));
     }
 
     /**
      * helper method for generating bar chart
+     *
      * @param weightEntry
      * @param chartIndex
      */
@@ -164,14 +183,9 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
         //BarEntry(arg1, arg2) -> arg1 must be a float value
         BarEntry newEntry = new BarEntry((float) weightEntry, chartIndex);
         userWeightDataSet.addEntry(newEntry);
-        /*c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.DATE, 0); //date is now added as current date
-        Date currentDate = c.getTime();*/
-        datesBC.add(new SimpleDateFormat(("dd-MM-yyyy")).format(dateEntry));
+        datesBC.add(new SimpleDateFormat("dd-MM-yyyy").format(dateEntry));
         userWeightBC.setData(new BarData(datesBC, userWeightDataSet));
-        //barEntryIndex++;
-        barEntryIndex++;
+        barEntryIndex++; // <- incrementing for every entry that is added to the bar chart to keep track of total entries
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -189,9 +203,7 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
 
         @Override
         protected Void doInBackground(Void... arg0) {
-
-
-            String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/user-progress/" + userID;
+            String getUrl = "http://coms-309-sb-7.misc.iastate.edu:8080/api/user-progress/?userId=" + userID;
             try {
                 URL url;
                 HttpURLConnection urlConnection = null;
@@ -238,48 +250,39 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
             }
         }
 
-        // methos that parses json to return message with username data in message
+        // method that parses json to return message with username data in message
         private void parseJson(String json) throws JSONException {
-
             JSONArray jArr = new JSONArray(json);
-            String realName = "";
             String weightStr = "";
             String dateStr = "";
             Date dateEntry;
             int indexBC = 0;
             for (int count = 0; count < jArr.length(); count++) {
                 JSONObject obj = jArr.getJSONObject(count);
-                if(obj.getString("user_id").equals(userID)) {
-                    weightStr = obj.getString("new_weight");
-                    dateStr = obj.getString("date_entered");
+                if (obj.getString("userId").equals(userID)) {
+                    weightStr = obj.getString("newWeight");
+                    dateStr = obj.getString("dateEntered");
                     try {
                         dateEntry = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(dateStr);
                         addEntryToBC(Double.parseDouble(weightStr), dateEntry, indexBC);
-                        System.out.println(dateEntry);
-                        System.out.println(dateEntry);
-                        System.out.println(dateEntry);
-                        System.out.println(dateEntry);
-
-                    } catch(ParseException e) {
+                    } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     indexBC++;
-                        //addEntryToBC();
-                    //String uName = obj.getString("userName") + "'s Progress";
-                    //userTitleTV.setText(uName);
-
                 }
             }
         }
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    private void postUserProgressModel(String userID, int newWeight, Date newDate) {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private void postUserProgressModel(String userID, String newWeight, String newDate) {
         final Map<String, String> params = new HashMap<String, String>();
 
-        params.put("user_id", userID);
-        params.put("new_weight", newWeight + "");
-        params.put("date_entered", newDate + "");
+        params.put("dateEntered", newDate);
+        params.put("newWeight", newWeight);
+        params.put("userId", userID);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Const.URL_NEW_PROGRESS_ENTRY, new JSONObject(params),
@@ -309,14 +312,8 @@ public class UserProgressActivity extends AppCompatActivity implements EntryDial
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-
         };
         System.out.println(jsonObjReq);
-        System.out.println(jsonObjReq);
-        System.out.println(jsonObjReq);
-        System.out.println(jsonObjReq);
-        System.out.println(jsonObjReq);
-
         AppController.getInstance().addToRequestQueue(jsonObjReq);
 
     }

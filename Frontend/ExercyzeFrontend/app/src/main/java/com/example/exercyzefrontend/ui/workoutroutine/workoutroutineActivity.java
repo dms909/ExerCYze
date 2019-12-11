@@ -270,7 +270,6 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-
         };
 
         AppController.getInstance().addToRequestQueue(jsonObjReq);
