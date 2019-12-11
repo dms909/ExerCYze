@@ -34,9 +34,8 @@ public class WorkoutRoutineController {
         return routineDao.findAll();
     }
 
-   /*@GetMapping(path = "{id}")
-    public List<Workout> getAllWorkoutsByWorkoutRoutineId(@PathVariable Integer id){
-        WorkoutRoutine toReturn =  db.findWorkoutRoutineById(id);
-        return toReturn.getWorkoutList();
-    }*/
+   @DeleteMapping
+    private void deleteWorkoutRoutineById(@PathVariable Integer id){
+        routineDao.deleteById(id);
+   }
 }

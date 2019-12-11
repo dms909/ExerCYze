@@ -85,11 +85,4 @@ public class UserController {
         }
         return jsonObject.toString();
     }
-
-    /*@PutMapping(path="{id}")
-    public void updateUserById(@PathVariable("id") Integer id, @Valid @NonNull @RequestBody User userToUpdate){
-        Optional<User> oldUser = db.findById(id);
-        oldUser.n
-    }*/
-
 }
