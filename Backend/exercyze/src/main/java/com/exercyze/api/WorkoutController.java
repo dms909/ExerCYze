@@ -38,7 +38,7 @@ public class WorkoutController {
      * @param id
      */
     @DeleteMapping(path="{id}")
-    private void deleteWorkoutByWorkoutId(@PathVariable int id){
+    public void deleteWorkoutByWorkoutId(@PathVariable int id){
         db.deleteById(id);
     }
 }
