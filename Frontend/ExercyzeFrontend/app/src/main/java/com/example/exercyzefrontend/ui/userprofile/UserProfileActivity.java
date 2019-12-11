@@ -36,6 +36,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * class that handles with user profile page ofo the app
+ */
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ConstraintLayout userProfileCL;
@@ -91,7 +94,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         new GetJsonData().execute();
 
     }
-
+    // method that catches if either button on page is pressed and it opens each corresponding page of that button
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -129,6 +132,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    // methos that handles with see if edit mode is on or not
     private void editMode(boolean mode) {
         if (mode) {
             userRealNameTV.setVisibility(View.GONE);
@@ -154,8 +158,12 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    /**
+     * class that handles with background activty with getting data on user to the page
+     */
     private class GetJsonData extends AsyncTask<Void, Void, Void> {
 
+        // method that executes first before making doing background activity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -163,6 +171,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         }
 
+        // background activity connection request to url server
         @Override
         protected Void doInBackground(Void... arg0) {
 
@@ -204,6 +213,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             return null;
         }
 
+        // once executed then parses json of the final result
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
@@ -214,6 +224,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             }
         }
 
+        // method that parses through the data fo user and updates fields on page
         private void parseJson(String json) throws JSONException {
 
             JSONArray jArr = new JSONArray(json);
