@@ -34,7 +34,7 @@ public class WorkoutRoutineController {
         return routineDao.findAll();
     }
 
-   @DeleteMapping
+   @DeleteMapping(path="{id}")
     private void deleteWorkoutRoutineById(@PathVariable Integer id){
         routineDao.deleteById(id);
    }
