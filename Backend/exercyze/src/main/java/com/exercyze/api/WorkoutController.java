@@ -37,7 +37,7 @@ public class WorkoutController {
      * Method to delete a whole routine
      * @param id
      */
-    @DeleteMapping(path="{id}")
+    @DeleteMapping(path="/{id}")
     public void deleteWorkoutByWorkoutId(@PathVariable int id){
         db.deleteById(id);
     }
