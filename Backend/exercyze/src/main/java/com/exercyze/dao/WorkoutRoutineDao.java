@@ -6,5 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WorkoutRoutineDao extends JpaRepository<WorkoutRoutine, Integer> {
+    /**
+     * Database method to help find a workoutRoutine by id in the database
+     * @param id
+     * @return
+     */
     WorkoutRoutine findWorkoutRoutineById(Integer id);
 }

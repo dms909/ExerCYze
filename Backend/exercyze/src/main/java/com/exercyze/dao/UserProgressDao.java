@@ -8,5 +8,10 @@ import java.util.List;
 
 @Repository
 public interface UserProgressDao extends JpaRepository<UserProgress, Integer> {
+    /**
+     * Helper method to find all users by an id in the database
+     * @param userId
+     * @return
+     */
     List<UserProgress> findAllByUserId(int userId);
 }
