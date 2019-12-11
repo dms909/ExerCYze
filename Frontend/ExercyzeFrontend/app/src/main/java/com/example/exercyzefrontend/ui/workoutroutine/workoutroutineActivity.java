@@ -41,17 +41,47 @@ import java.util.Map;
 
 public class workoutroutineActivity extends AppCompatActivity implements WorkoutNameEntryDialog.WorkoutNameEntryDialogListener {
 
+    /**
+     * TAG used for volley logging
+     */
     private String TAG = workoutActivity.class.getSimpleName();
-    private String tag_json_obj = "jobj_req";
+
+    /**
+     * list view for the routine names
+     */
     private ListView mListView;
+
+    /**
+     * array adapter that will set the array list of routine names as a viewable list
+     */
     private ArrayAdapter arrayAdapter;
-    //List<String> value = new ArrayList<>();
-    private Button addworkout, saveBtn, exitBtn;
+    /**
+     * addRoutineBtn:
+     *      Button that will call an entry dialog prompting the user to enter a routine name
+     * saveBtn:
+     *      Button used when the user decides they want to keep the routines they've made
+     * exitBtn:
+     *      Button for when the user would like to exit the workout page without a saving functionality
+     */
+    private Button addRoutineBtn, saveBtn, exitBtn;
+    /**
+     * string for response from http call
+     */
     private String finalresult;
+    /**
+     * a routine name will be added to this list after the user enters the name into the entry dialog that appears after
+     * clicking the addRoutineBtn
+     */
     private ArrayList<String> routineNameList;
+    /**
+     * an array of Workout Routine objects to grab the user id when the user would like to add workout items
+     * to a specific routine
+     */
     private ArrayList<WorkoutRoutine> workoutRoutineViewList;
+    /**
+     * will attach a creator to the routine created on the backend
+     */
     private String creator;
-    private URL url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +91,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
 
 
         mListView = (ListView) findViewById(R.id.userRoutineList);
-        addworkout = (Button) findViewById(R.id.addRoutineBtn);
+        addRoutineBtn = (Button) findViewById(R.id.addRoutineBtn);
         saveBtn = (Button) findViewById(R.id.saveBtn);
         exitBtn = (Button) findViewById(R.id.exitBtn);
 
@@ -89,7 +119,7 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
             }
         });
 
-        addworkout.setOnClickListener(new View.OnClickListener() {
+        addRoutineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openEntryDialog();
@@ -120,17 +150,29 @@ public class workoutroutineActivity extends AppCompatActivity implements Workout
         new GetJsonData().execute();
 
     }
+
+    /**
+     * helper method when sending a get request
+     * @param aList
+     */
     private void setAdapter(ArrayList<String> aList) {
         //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineNameList);
         arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineNameList);
         mListView.setAdapter(arrayAdapter);
     }
 
+    /**
+     * method that starts an entry dialog popup
+     */
     public void openEntryDialog() {
         WorkoutNameEntryDialog entryDialog = new WorkoutNameEntryDialog();
         entryDialog.show(getSupportFragmentManager(), "workout name entry dialog");
     }
 
+    /**
+     * method that handles the name of the routine entered by the user
+     * @param workoutNameEntryStr
+     */
     @Override
     public void applyValue(String workoutNameEntryStr) {
         routineNameList.add(workoutNameEntryStr);
