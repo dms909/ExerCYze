@@ -46,7 +46,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
     private String TAG = workoutActivity.class.getSimpleName();
     private String finalresult;
-
     private ListView listView;
     private ArrayAdapter arrayAdapter;
     private ArrayList<String> routineList;
@@ -72,7 +71,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
         new GetJsonData().execute();
 
-        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
         arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
         listView.setAdapter(arrayAdapter);
 
@@ -113,7 +111,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     }
 
     private void setAdapter(ArrayList<String> aList) {
-        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, aList);
         arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, aList);
         listView.setAdapter(arrayAdapter);
     }
@@ -127,7 +124,6 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
     public void applyValue(String workoutItemEntryStr, int setEntry, int repEntry){
         routineList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
         routineWorkoutList.add(new Workout(workoutItemEntryStr,setEntry,repEntry));
-        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, routineList);
         arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
         listView.setAdapter(arrayAdapter);
     }
@@ -163,9 +159,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                         response.append(inputLine);
                     }
                     inurl.close();
-
                 } else {
-
                     Log.i("test", "GET request not worked.");
                 }
 
@@ -189,7 +183,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
             }
         }
 
-        public void parseJson(String json) throws JSONException {
+        private void parseJson(String json) throws JSONException {
 
             JSONArray jArr = new JSONArray(json);
             String workoutItemName = "";
@@ -241,9 +235,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-
         };
-
         AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 }
