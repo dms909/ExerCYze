@@ -43,15 +43,35 @@ import com.example.exercyzefrontend.R;
 
 public class workoutActivity extends AppCompatActivity implements WorkoutEntryDialog.WorkoutEntryDialogListener {
 
-
+    /**
+     *  TAG used for volley log for get request
+     */
     private String TAG = workoutActivity.class.getSimpleName();
+    /**
+     * string variable for the json get request response
+     */
     private String finalresult;
+    /**
+     * View for the items of the routine
+     */
     private ListView listView;
+    /**
+     * Allows for the array of workout items to be viewable in a list
+     */
     private ArrayAdapter arrayAdapter;
-    private ArrayList<String> routineList;
+    /**
+     * An array of workout items that are inputted by the user when entry dialog is activated
+     */
+    private ArrayList<String> routineItemList;
+    /**
+     * an array of workout item objects that are able to retrieve certain data
+     */
     private ArrayList<Workout> routineWorkoutList;
+    /**
+     * creator of the workout routine that is used in get request
+     */
     private String creator;
-    private String routineNameStr;
+
     private String routineID;
 
     @Override
@@ -63,15 +83,15 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
         Intent workoutViewItemIntent = getIntent();
         creator = workoutViewItemIntent.getStringExtra("user_name");
-        routineNameStr = workoutViewItemIntent.getStringExtra("workout_name");
+        String routineNameStr = workoutViewItemIntent.getStringExtra("workout_name");
         routineID = workoutViewItemIntent.getStringExtra("workout_id");
 
-        routineList = new ArrayList<>();
+        routineItemList = new ArrayList<>();
         routineWorkoutList = new ArrayList<>();
 
         new GetJsonData().execute();
 
-        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineItemList);
         listView.setAdapter(arrayAdapter);
 
         final Button addItemBtn = (Button) findViewById(R.id.workoutItemAddBtn);
@@ -92,7 +112,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i=0; i<routineList.size(); i++) {
+                for(int i=0; i<routineItemList.size(); i++) {
                     String newWorkoutItem = routineWorkoutList.get(i).getWorkoutItem();
                     int newSets = routineWorkoutList.get(i).getSets();
                     int newReps = routineWorkoutList.get(i).getReps();
@@ -122,9 +142,9 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
 
     @Override
     public void applyValue(String workoutItemEntryStr, int setEntry, int repEntry){
-        routineList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
+        routineItemList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
         routineWorkoutList.add(new Workout(workoutItemEntryStr,setEntry,repEntry));
-        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineList);
+        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, routineItemList);
         listView.setAdapter(arrayAdapter);
     }
 
@@ -196,7 +216,7 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
                 workoutItemReps = Integer.parseInt(obj.getString("reps"));
                 workoutItemSets = Integer.parseInt(obj.getString("sets"));
                 routineWorkoutList.add(new Workout(workoutItemName, workoutItemSets, workoutItemReps));
-                routineList.add(workoutItemName + " \t \t " + workoutItemSets + " x " + workoutItemReps);
+                routineItemList.add(workoutItemName + " \t \t " + workoutItemSets + " x " + workoutItemReps);
             }
         }
     }
