@@ -18,22 +18,39 @@ public class WorkoutRoutineController {
     @Autowired
     WorkoutRoutineDao routineDao;
 
+    /**
+     * Method to add a new workout routine in the database
+     * @param workoutRoutine
+     */
     @PostMapping
     private void addWorkoutRoutine(@Valid @NonNull @RequestBody WorkoutRoutine workoutRoutine){
         routineDao.save(workoutRoutine);
     }
 
+    /**
+     * Method to get a workout routine by its unique id
+     * @param id
+     * @return workoutRoutine found by it's id
+     */
     @GetMapping(path = "{id}")
     private WorkoutRoutine getWorkoutRoutineById(@PathVariable Integer id){
         WorkoutRoutine toReturn =  routineDao.findWorkoutRoutineById(id);
         return toReturn;
     }
 
+    /**
+     * Method to return all workout routines created on the server
+     * @return all workout routines in database
+     */
     @GetMapping
     private List<WorkoutRoutine> getAllWorkoutRoutine(){
         return routineDao.findAll();
     }
 
+    /**
+     * Method to delete a workout routine by its id
+     * @param id
+     */
    @DeleteMapping(path="{id}")
     private void deleteWorkoutRoutineById(@PathVariable Integer id){
         routineDao.deleteById(id);

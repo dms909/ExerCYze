@@ -59,7 +59,7 @@ public class UserController {
     }
 
     /**
-     *
+     * Delete a user
      * @param id
      */
     @DeleteMapping(path="{id}")
@@ -67,9 +67,17 @@ public class UserController {
         db.deleteById(id);
     }
 
+    /**
+     * Method used on sign in.
+     * @param userName
+     * @param password
+     * @return
+     */
     @PostMapping(path="authenticate")
     private @ResponseBody String authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
         JSONObject jsonObject = null;
+
+        //Check if a user used a valid username and password. If they have, they will receive a valid login
         try {
             jsonObject = new JSONObject(password);
             User toAuthenticate = db.findByUserName(userName);

@@ -16,16 +16,29 @@ public class UserProgressController {
     @Autowired
     UserProgressDao db;
 
+    /**
+     * Add a new user progress entry to the database
+     * @param userProgress
+     */
     @PostMapping
     private void addUserProgressEntry(@Valid @NonNull @RequestBody UserProgress userProgress){
         db.save(userProgress);
     }
 
+    /**
+     * Method to get all user progress entries in the database
+     * @return list of all user progress entries createds
+     */
     @GetMapping
     private List<UserProgress> getAllUserProgressEntry(){
         return db.findAll();
     }
 
+    /**
+     * Method to get all user progress entries under a specific user
+     * @param userId
+     * @return
+     */
     @GetMapping(path = "{id}")
     private List<UserProgress> getAllUserProgressEntryById(@PathVariable int userId){
         return db.findAllByUserId(userId);
