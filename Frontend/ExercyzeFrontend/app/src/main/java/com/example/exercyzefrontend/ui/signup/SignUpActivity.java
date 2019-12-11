@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -20,25 +19,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.exercyzefrontend.R;
 import com.example.exercyzefrontend.app.AppController;
 import com.example.exercyzefrontend.ui.login.LoginActivity;
-import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
 import com.example.exercyzefrontend.utils.Const;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Length;
-import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
-import com.mobsandgeeks.saripaar.annotation.Pattern;
 
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -85,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         validated = false;
         signUpButton = findViewById(R.id.signUpCompletBtn);
         returnToLoginButton = findViewById(R.id.returnToLoginBtn);
+
         firstNameET = findViewById(R.id.firstNameSignUpEditText);
         lastNameET = findViewById(R.id.lastNameSignUpEditText);
         userNameET = findViewById(R.id.userNameSignUpEditText);
@@ -101,14 +95,12 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
             @Override
             public void onClick(View view) {
                 Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
-
                 startActivity(loginActivity);
             }
         });
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String firstName = firstNameET.getText().toString();
                 String lasttName = lastNameET.getText().toString();
                 String userName = userNameET.getText().toString();
@@ -116,8 +108,8 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 double height = Double.parseDouble(heightET.getText().toString());
                 double weight = Double.parseDouble(weightET.getText().toString());
 
-
                 validator.validate();
+
                 if (height == 0.0) {
                     validated = false;
                     heightET.setError("Invalid height");
@@ -127,7 +119,6 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                     weightET.setError("Invalid weight");
                 }
                 if (validated) {
-
                     Toast.makeText(getApplicationContext(), "Profile successfully created!", Toast.LENGTH_SHORT).show();
                     postUserModel(firstName, lasttName, userName, password, height, weight);
                     Intent loginActivity = new Intent(SignUpActivity.this, LoginActivity.class);
@@ -160,7 +151,6 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage()
                         + "Error cause: " + error.getCause());
-
             }
         }) {
 
@@ -173,11 +163,8 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-
         };
-
         AppController.getInstance().addToRequestQueue(jsonObjReq);
-
     }
 
     @Override

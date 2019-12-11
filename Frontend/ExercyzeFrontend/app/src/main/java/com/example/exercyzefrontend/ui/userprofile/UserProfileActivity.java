@@ -205,7 +205,6 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         protected void onPreExecute() {
             super.onPreExecute();
             // before making http calls
-
         }
 
         @Override
@@ -231,9 +230,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                         response.append(inputLine);
                     }
                     inurl.close();
-
                 } else {
-
                     Log.i("test", "POST request not worked.");
                 }
 
