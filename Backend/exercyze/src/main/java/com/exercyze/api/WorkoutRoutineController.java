@@ -51,7 +51,7 @@ public class WorkoutRoutineController {
      * Method to delete a workout routine by its id
      * @param id
      */
-   @DeleteMapping(path="{id}")
+   @DeleteMapping(path="/{id}")
     public void deleteWorkoutRoutineById(@PathVariable Integer id){
         routineDao.deleteById(id);
    }
