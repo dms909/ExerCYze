@@ -23,4 +23,9 @@ public class WorkoutController {
     private List<Workout> getWorkoutsByRoutineId(@PathVariable int id){
         return db.findAllByWorkoutRoutineId(id);
     }
+
+    @DeleteMapping(path="{id}")
+    private void deleteWorkoutByWorkoutId(@PathVariable int id){
+        db.deleteById(id);
+    }
 }
