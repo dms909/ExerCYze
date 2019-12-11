@@ -130,16 +130,20 @@ public class workoutActivity extends AppCompatActivity implements WorkoutEntryDi
         });
     }
 
-    private void setAdapter(ArrayList<String> aList) {
-        arrayAdapter = new ArrayAdapter(this, R.layout.list_white_text, R.id.list_content, aList);
-        listView.setAdapter(arrayAdapter);
-    }
-
+    /**
+     * method that opens the add workout item entry dialog
+     */
     public void openEntryDialog() {
         WorkoutEntryDialog entryDialog = new WorkoutEntryDialog();
         entryDialog.show(getSupportFragmentManager(), "workout entry dialog");
     }
 
+    /**
+     * method that handles the user inputted data from entry dialog
+     * @param workoutItemEntryStr
+     * @param setEntry
+     * @param repEntry
+     */
     @Override
     public void applyValue(String workoutItemEntryStr, int setEntry, int repEntry){
         routineItemList.add(workoutItemEntryStr + " \t \t " + setEntry + " x " + repEntry);
