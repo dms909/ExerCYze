@@ -17,6 +17,10 @@ public class UserController {
     @Autowired
     UserDao db;
 
+    /**
+     * Method to add a new user to the database
+     * @param user
+     */
     @PostMapping
     public void addUser(@Valid @NonNull @RequestBody User user){
         if(getUserByUserName(user.getUserName()) == null){
@@ -25,21 +29,39 @@ public class UserController {
         }
     }
 
+    /**
+     * Method to return a list of all users
+     * @return list of all users in the database
+     */
     @GetMapping
     public List<User> getAllUser(){
         return db.findAll();
     }
 
+    /**
+     * Method to find a user by an id and return all of that user's data
+     * @param id
+     * @return found user
+     */
     @GetMapping(path = "{id}")
     public User getUserById(@PathVariable Integer id){
         return db.findUserById(id);
     }
 
+    /**
+     * Method to find a user by a user name and return all their data
+     * @param userName
+     * @return found user
+     */
     @GetMapping(path = "userName")
     public User getUserByUserName(@RequestParam("userName") String userName){
         return db.findByUserName(userName);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DeleteMapping(path="{id}")
     public void deleteUserById(@PathVariable("id") Integer id){
         db.deleteById(id);
