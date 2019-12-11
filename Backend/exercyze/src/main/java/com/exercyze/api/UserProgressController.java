@@ -17,17 +17,17 @@ public class UserProgressController {
     UserProgressDao db;
 
     @PostMapping
-    public void addUserProgressEntry(@Valid @NonNull @RequestBody UserProgress userProgress){
+    private void addUserProgressEntry(@Valid @NonNull @RequestBody UserProgress userProgress){
         db.save(userProgress);
     }
 
     @GetMapping
-    public List<UserProgress> getAllUserProgressEntry(){
+    private List<UserProgress> getAllUserProgressEntry(){
         return db.findAll();
     }
 
     @GetMapping(path = "{id}")
-    public List<UserProgress> getAllUserProgressEntryById(@PathVariable int userId){
+    private List<UserProgress> getAllUserProgressEntryById(@PathVariable int userId){
         return db.findAllByUserId(userId);
     }
 }

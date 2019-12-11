@@ -15,12 +15,12 @@ public class WorkoutController {
     WorkoutDao db;
 
     @PostMapping(path="addWorkout")
-    public void addWorkoutToRoutine(@RequestBody Workout workout){
+    private void addWorkoutToRoutine(@RequestBody Workout workout){
         db.save(workout);
     }
 
     @GetMapping(path="getRoutine/{id}")
-    public List<Workout> getWorkoutsByRoutineId(@PathVariable int id){
+    private List<Workout> getWorkoutsByRoutineId(@PathVariable int id){
         return db.findAllByWorkoutRoutineId(id);
     }
 }

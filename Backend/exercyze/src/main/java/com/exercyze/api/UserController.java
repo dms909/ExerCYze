@@ -22,7 +22,7 @@ public class UserController {
      * @param user
      */
     @PostMapping
-    public void addUser(@Valid @NonNull @RequestBody User user){
+    private void addUser(@Valid @NonNull @RequestBody User user){
         if(getUserByUserName(user.getUserName()) == null){
             db.save(user);
             return;
@@ -34,7 +34,7 @@ public class UserController {
      * @return list of all users in the database
      */
     @GetMapping
-    public List<User> getAllUser(){
+    private List<User> getAllUser(){
         return db.findAll();
     }
 
@@ -44,7 +44,7 @@ public class UserController {
      * @return found user
      */
     @GetMapping(path = "{id}")
-    public User getUserById(@PathVariable Integer id){
+    private User getUserById(@PathVariable Integer id){
         return db.findUserById(id);
     }
 
@@ -54,7 +54,7 @@ public class UserController {
      * @return found user
      */
     @GetMapping(path = "userName")
-    public User getUserByUserName(@RequestParam("userName") String userName){
+    private User getUserByUserName(@RequestParam("userName") String userName){
         return db.findByUserName(userName);
     }
 
@@ -63,12 +63,12 @@ public class UserController {
      * @param id
      */
     @DeleteMapping(path="{id}")
-    public void deleteUserById(@PathVariable("id") Integer id){
+    private void deleteUserById(@PathVariable("id") Integer id){
         db.deleteById(id);
     }
 
     @PostMapping(path="authenticate")
-    public @ResponseBody String authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
+    private @ResponseBody String authenticateUserByUserName(@RequestParam("userName") String userName, @RequestBody String password){
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(password);

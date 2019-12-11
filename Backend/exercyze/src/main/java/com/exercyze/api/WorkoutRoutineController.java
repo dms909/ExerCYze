@@ -19,18 +19,18 @@ public class WorkoutRoutineController {
     WorkoutRoutineDao routineDao;
 
     @PostMapping
-    public void addWorkoutRoutine(@Valid @NonNull @RequestBody WorkoutRoutine workoutRoutine){
+    private void addWorkoutRoutine(@Valid @NonNull @RequestBody WorkoutRoutine workoutRoutine){
         routineDao.save(workoutRoutine);
     }
 
     @GetMapping(path = "{id}")
-    public WorkoutRoutine getWorkoutRoutineById(@PathVariable Integer id){
+    private WorkoutRoutine getWorkoutRoutineById(@PathVariable Integer id){
         WorkoutRoutine toReturn =  routineDao.findWorkoutRoutineById(id);
         return toReturn;
     }
 
     @GetMapping
-    public List<WorkoutRoutine> getAllWorkoutRoutine(){
+    private List<WorkoutRoutine> getAllWorkoutRoutine(){
         return routineDao.findAll();
     }
 
