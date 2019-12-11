@@ -40,12 +40,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * class that handles with sign up activty page on app
+ */
 public class SignUpActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     private String TAG = SignUpActivity.class.getSimpleName();
     private Button signUpButton;
     private Button returnToLoginButton;
-
+    // validation on invaild input to field
     @NotEmpty(trim = true)
     @Length(min = 2, max = 30, message = "Invalid input")
     private EditText firstNameET;
@@ -80,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         setContentView(R.layout.activity_sign_up);
         initView();
     }
-
+    // showing of the intital view of the text sign up fields
     private void initView() {
         validated = false;
         signUpButton = findViewById(R.id.signUpCompletBtn);
@@ -96,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
 
         validator = new Validator(this);
         validator.setValidationListener(this);
-
+        // back button if presed goes back to login in page
         returnToLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,6 +108,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                 startActivity(loginActivity);
             }
         });
+        // button pressed when all fields are entered in to add new user into data base
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
             }
         });
     }
-
+    // adding new user's data to database in server
     private void postUserModel(String firstName, String lastName, String userName, String password, double height, double weight) {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("firstName", firstName);
@@ -155,7 +159,7 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
                         Log.d(TAG, response.toString());
                     }
                 }, new Response.ErrorListener() {
-
+            // method for error response
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage()
@@ -179,13 +183,13 @@ public class SignUpActivity extends AppCompatActivity implements Validator.Valid
         AppController.getInstance().addToRequestQueue(jsonObjReq);
 
     }
-
+    // once done validation then message
     @Override
     public void onValidationSucceeded() {
         Toast.makeText(this, "Profile successfully completed", Toast.LENGTH_SHORT).show();
         validated = true;
     }
-
+    // if validation failes then this method
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
