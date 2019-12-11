@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.exercyzefrontend.R;
+import com.example.exercyzefrontend.ui.progress.UserProgressActivity;
 import com.example.exercyzefrontend.ui.userprofile.UserProfileActivity;
 
 import org.java_websocket.client.WebSocketClient;
@@ -21,14 +22,16 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
+/**
+ * Class that hadles with web chat page on the app
+ */
 public class webChatActivity extends AppCompatActivity {
 
-    Button  sendBtn, backBtn;
-    EditText message;
-    TextView chatroom;
-
+    private Button  sendBtn, backBtn;
+    private EditText message;
+    private TextView chatroom;
     private WebSocketClient cc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,9 +41,20 @@ public class webChatActivity extends AppCompatActivity {
         backBtn =(Button)findViewById(R.id.backBtn);
         message =(EditText)findViewById(R.id.messageinput);
         chatroom =(TextView)findViewById(R.id.chatroom);
-        String userNameStr = getIntent().getStringExtra("user_name");
+        final String userNameStr = getIntent().getStringExtra("user_name");
         Draft[] drafts = {new Draft_6455()};
+        // if back button is pressed then goes back to user profile page
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent userProfileIntent = new Intent(webChatActivity.this, UserProfileActivity.class);
+                userProfileIntent.putExtra("user_name", userNameStr);
+                startActivity(userProfileIntent);
+            }
+        });
+
         String w = "ws://coms-309-sb-7.misc.iastate.edu:8080/websocket/"+userNameStr;
+        // starting up connection
         try {
             Log.d("Socket:", "Trying socket");
             cc = new WebSocketClient(new URI(w),(Draft) drafts[0]) {
@@ -68,12 +82,14 @@ public class webChatActivity extends AppCompatActivity {
                 }
             };
         }
+        // catch errors
         catch (URISyntaxException e) {
             Log.d("Exception:", e.getMessage().toString());
             e.printStackTrace();
         }
         cc.connect();
 
+        // send message in the message field to server then give response back with message with username next to them
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
