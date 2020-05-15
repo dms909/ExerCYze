@@ -1,2 +1,2 @@
-# SB_7
+Developed by Dylan Smith, Noah Frederiksen, and Meet Patel
 
